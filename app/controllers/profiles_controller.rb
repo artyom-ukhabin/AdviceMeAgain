@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_user
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :forbid_changes_for_strangers, only: [:update, :destroy]
+  before_action :forbid_changes_for_strangers, only: [:edit, :update, :destroy]
 
   # GET /profiles/1
   # GET /profiles/1.json
@@ -69,7 +69,8 @@ class ProfilesController < ApplicationController
   end
 
   def forbid_changes_for_strangers
-    #redirect_to @profile unless #current_user == @profile.user
+    #TODO: update after authorization implementation
+    #redirect_to root_path unless #current_user == @profile.user
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
