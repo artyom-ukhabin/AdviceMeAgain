@@ -23,14 +23,7 @@ RSpec.describe ProfilesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Profile. As you add validations to Profile, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) do
-    {
-      name: 'a',
-      city: 'b',
-      info: 'c'
-    } #TODO: factory implementation
-  end
-
+  let(:valid_attributes) { attributes_for(:profile) }
   let(:invalid_attributes) {
     skip("No invalid attributes right now")
   }
@@ -39,7 +32,7 @@ RSpec.describe ProfilesController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # ProfilesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-  let(:profile_owner) { User.create }
+  let(:profile_owner) { create(:user) }
 
   after(:example) do
     expect(assigns(:user)).to eq(profile_owner)
@@ -108,7 +101,7 @@ RSpec.describe ProfilesController, type: :controller do
   end
 
   context 'edit actions' do
-    let(:stranger) { User.create }
+    let(:stranger) { create(:user) }
 
     describe "GET #edit" do
       context 'for profile owner' do
@@ -135,13 +128,7 @@ RSpec.describe ProfilesController, type: :controller do
     describe "PUT #update" do
       context 'for profile owner' do
         context "with valid params" do
-          let(:new_attributes) do
-            {
-              name: 'd',
-              city: 'e',
-              info: 'f'
-            } #TODO: factory implementation
-          end
+          let(:new_attributes) { attributes_for(:profile) }
 
           it "updates the requested profile" do
             profile = profile_owner.create_profile valid_attributes

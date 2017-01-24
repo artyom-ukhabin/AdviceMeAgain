@@ -68,7 +68,7 @@ class ProfilesController < ApplicationController
     @profile = @user.profile
   end
 
-  def forbid_changes_for_strangers
+  def forbid_changes_for_strangers #TODO: think about pundit/cancan
     #TODO: update after authorization implementation
     #redirect_to root_path unless #current_user == @profile.user
   end

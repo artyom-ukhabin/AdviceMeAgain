@@ -1,14 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "profiles/show", type: :view do
-  let(:profile_owner) { User.create }
+  let(:profile_owner) { create(:user) }
+  let(:profile) { create(:profile, user: profile_owner) }
 
   before(:each) do
-    @profile = assign(:profile, profile_owner.create_profile(
-      :name => "Name",
-      :city => "City",
-      :info => "Info"
-    )) #TODO: factory implementation
+    @profile = assign(:profile, profile)
     @user = assign(:user, profile_owner)
   end
 

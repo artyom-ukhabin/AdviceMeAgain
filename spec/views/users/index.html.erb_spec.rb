@@ -1,19 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe "users/index", type: :view do
+  let(:first_user) { create(:user) }
+  let(:second_user) { create(:user) }
+
   before(:each) do
-    assign(:users, [
-      User.create!(
-        :role => "Role"
-      ),
-      User.create!(
-        :role => "Role"
-      )
-    ]) #TODO: factory implementation
+    assign(:users, [first_user, second_user])
   end
 
   it "renders a list of users" do
     render
-    assert_select "tr>td", :text => "Role".to_s, :count => 2
+    assert_select "tr>td", :text => first_user.role
+    assert_select "tr>td", :text => second_user.role
   end
 end
