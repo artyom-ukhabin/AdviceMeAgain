@@ -13,7 +13,7 @@ RSpec.describe "profiles/edit", type: :view do
     controller.request.path_parameters[:user_id] = profile_owner.to_param #TODO: investigate
     render
 
-    assert_select "form[action=?][method=?]", user_profile_path(profile_owner), "post" do
+    assert_select "form[action=?][method=?]", profile_path(profile), "post" do
 
       assert_select "input#profile_name[name=?]", "profile[name]"
 

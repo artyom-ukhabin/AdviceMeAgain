@@ -34,188 +34,251 @@ RSpec.describe ProfilesController, type: :controller do
   let(:valid_session) { {} }
   let(:profile_owner) { create(:user) }
 
-  after(:example) do
-    expect(assigns(:user)).to eq(profile_owner)
+  describe "GET #show" do
+    before :example do
+      sign_in profile_owner
+    end
+
+    it "assigns the requested profile as @profile" do
+      profile = profile_owner.create_profile valid_attributes
+      get :show, params: {id: profile.to_param}, session: valid_session
+      expect(assigns(:profile)).to eq(profile)
+    end
   end
 
-  context "show/new actions" do
-    describe "GET #show" do
-      it "assigns the requested profile as @profile" do
-        profile = profile_owner.create_profile valid_attributes
-        get :show, params: {user_id: profile_owner.to_param}, session: valid_session
-        expect(assigns(:profile)).to eq(profile)
-      end
+  context "create actions" do
+    before :example do
+      sign_in profile_owner
+    end
+
+    after(:example) do
+      expect(assigns(:user)).to eq(profile_owner)
     end
 
     describe "GET #new" do
       it 'belongs to profile owner' do
-        get :new, params: {user_id: profile_owner.to_param}, session: valid_session
+        get :new, session: valid_session
         expect(assigns(:user).profile).to eq assigns(:profile)
       end
 
       it "assigns a new profile as @profile" do
-        get :new, params: {user_id: profile_owner.to_param}, session: valid_session
+        get :new, session: valid_session
         expect(assigns(:profile)).to be_a_new(Profile)
       end
     end
 
     describe "POST #create" do
-      context 'for profile owner' do
-        context "with valid params" do
-          it "creates a new Profile" do
-            expect {
-              post :create, params: {user_id: profile_owner.to_param, profile: valid_attributes}, session: valid_session
-            }.to change(Profile, :count).by(1)
-          end
-
-          it 'belongs to profile owner' do
-            post :create, params: {user_id: profile_owner.to_param, profile: valid_attributes}, session: valid_session
-            expect(assigns(:user).profile).to eq assigns(:profile)
-          end
-
-          it "assigns a newly created profile as @profile" do
-            post :create, params: {user_id: profile_owner.to_param, profile: valid_attributes}, session: valid_session
-            expect(assigns(:profile)).to be_a(Profile)
-            expect(assigns(:profile)).to be_persisted
-          end
-
-          it "redirects to the created profile" do
-            post :create, params: {user_id: profile_owner.to_param, profile: valid_attributes}, session: valid_session
-            expect(response).to redirect_to([profile_owner, Profile.last])
-          end
+      context "with valid params" do
+        it "creates a new Profile" do
+          expect {
+            post :create, params: {profile: valid_attributes}, session: valid_session
+          }.to change(Profile, :count).by(1)
         end
 
-        context "with invalid params" do
-          it "assigns a newly created but unsaved profile as @profile" do
-            post :create, params: {user_id: profile_owner.to_param, profile: invalid_attributes}, session: valid_session
-            expect(assigns(:profile)).to be_a_new(Profile)
-          end
+        it 'belongs to profile owner' do
+          post :create, params: {profile: valid_attributes}, session: valid_session
+          expect(assigns(:user).profile).to eq assigns(:profile)
+        end
 
-          it "re-renders the 'new' template" do
-            post :create, params: {user_id: profile_owner.to_param, profile: invalid_attributes}, session: valid_session
-            expect(response).to render_template("new")
-          end
+        it "assigns a newly created profile as @profile" do
+          post :create, params: {profile: valid_attributes}, session: valid_session
+          expect(assigns(:profile)).to be_a(Profile)
+          expect(assigns(:profile)).to be_persisted
+        end
+
+        it "redirects to the created profile" do
+          post :create, params: {profile: valid_attributes}, session: valid_session
+          expect(response).to redirect_to(Profile.last)
+        end
+      end
+
+      context "with invalid params" do
+        it "assigns a newly created but unsaved profile as @profile" do
+          post :create, params: {profile: invalid_attributes}, session: valid_session
+          expect(assigns(:profile)).to be_a_new(Profile)
+        end
+
+        it "re-renders the 'new' template" do
+          post :create, params: {profile: invalid_attributes}, session: valid_session
+          expect(response).to render_template("new")
         end
       end
     end
   end
 
   context 'edit actions' do
+    let(:admin) { create(:admin) }
     let(:stranger) { create(:user) }
+    let!(:profile) { profile_owner.create_profile valid_attributes }
 
     describe "GET #edit" do
-      context 'for profile owner' do
-        it "assigns the requested profile as @profile" do
-          profile = profile_owner.create_profile valid_attributes
-          get :show, params: {user_id: profile_owner.to_param}, session: valid_session
-          expect(assigns(:profile)).to eq(profile)
+      context 'for user with permissions' do
+        shared_examples 'user with permission' do
+          it "assigns the requested profile as @profile" do
+            sign_in user_with_permission
+            get :edit, params: {id: subject_profile.to_param}, session: session
+            expect(assigns(:profile)).to eq(subject_profile)
+            expect(response).to render_template('edit')
+          end
+        end
+
+        context 'for owner' do
+          it_behaves_like 'user with permission' do
+            let(:user_with_permission) { profile_owner }
+            let(:subject_profile) { profile }
+            let(:session) { valid_session }
+          end
+        end
+
+        context 'for admin' do
+          it_behaves_like 'user with permission' do
+            let(:user_with_permission) { admin }
+            let(:subject_profile) { profile }
+            let(:session) { valid_session }
+          end
         end
       end
 
       context 'for stranger' do
-        before(:example) do
-          #TODO: update after authorization implementation
-          skip("Not implemented yet")
-        end
-
         it 'should redirect to root' do
-          get :show, params: {user_id: stranger.to_param}, session: valid_session
+          sign_in stranger
+          get :edit, params: {id: profile.to_param}, session: valid_session
           expect(response).to redirect_to(root_path)
         end
       end
     end
 
     describe "PUT #update" do
-      context 'for profile owner' do
-        context "with valid params" do
-          let(:new_attributes) { attributes_for(:profile) }
+      let(:new_attributes) { attributes_for(:profile) }
 
-          it "updates the requested profile" do
-            profile = profile_owner.create_profile valid_attributes
-            put :update, params: {user_id: profile_owner.to_param, profile: new_attributes}, session: valid_session
-            profile.reload
-            expect(profile.attributes).to include new_attributes.stringify_keys
+      context 'for user with permissions' do
+        shared_examples 'user with permission' do
+          context "with valid params" do
+            before :example do
+              sign_in user_with_permission
+            end
+
+            it "updates the requested profile" do
+              put :update, params: {id: profile.to_param, profile: update_attributes}, session: session
+              subject_profile.reload
+              expect(subject_profile.attributes).to include new_attributes.stringify_keys
+            end
+
+            it "assigns the requested profile as @profile" do
+              put :update, params: {id: profile.to_param, profile: pass_attributes}, session: session
+              expect(assigns(:profile)).to eq(subject_profile)
+            end
+
+            it "redirects to the profile" do
+              put :update, params: {id: profile.to_param, profile: pass_attributes}, session: session
+              expect(response).to redirect_to(subject_profile)
+            end
           end
 
-          it "assigns the requested profile as @profile" do
-            profile = profile_owner.create_profile valid_attributes
-            put :update, params: {user_id: profile_owner.to_param, profile: valid_attributes}, session: valid_session
-            expect(assigns(:profile)).to eq(profile)
-          end
+          context "with invalid params" do
+            it "assigns the profile as @profile" do
+              put :update, params: {id: profile.to_param, profile: reject_attributes}, session: session
+              expect(assigns(:profile)).to eq(subject_profile)
+            end
 
-          it "redirects to the profile" do
-            profile = profile_owner.create_profile valid_attributes
-            put :update, params: {user_id: profile_owner.to_param, profile: valid_attributes}, session: valid_session
-            expect(response).to redirect_to([profile_owner, profile])
+            it "re-renders the 'edit' template" do
+              put :update, params: {id: profile.to_param, profile: reject_attributes}, session: session
+              expect(response).to render_template("edit")
+            end
           end
         end
 
-        context "with invalid params" do
-          it "assigns the profile as @profile" do
-            profile = profile_owner.create_profile valid_attributes
-            put :update, params: {user_id: profile_owner.to_param, profile: invalid_attributes}, session: valid_session
-            expect(assigns(:profile)).to eq(profile)
+        context 'for owner' do
+          it_behaves_like 'user with permission' do
+            let(:user_with_permission) { profile_owner }
+            let(:subject_profile) { profile }
+            let(:update_attributes) { new_attributes }
+            let(:pass_attributes) { valid_attributes }
+            let(:reject_attributes) { invalid_attributes }
+            let(:session) { valid_session }
           end
+        end
 
-          it "re-renders the 'edit' template" do
-            profile_owner.create_profile valid_attributes
-            put :update, params: {user_id: profile_owner.to_param, profile: invalid_attributes}, session: valid_session
-            expect(response).to render_template("edit")
+        context 'for admin' do
+          it_behaves_like 'user with permission' do
+            let(:user_with_permission) { admin }
+            let(:subject_profile) { profile }
+            let(:update_attributes) { new_attributes }
+            let(:pass_attributes) { valid_attributes }
+            let(:reject_attributes) { invalid_attributes }
+            let(:session) { valid_session }
           end
         end
       end
 
       context 'for stranger' do
         before(:example) do
-          #TODO: update after authorization implementation
-          skip("Not implemented yet")
+          sign_in stranger
         end
 
         it 'should not change profile' do
           profile = profile_owner.create_profile valid_attributes
-          put :update, params: {user_id: stranger.to_param, profile: new_attributes}, session: valid_session
+          put :update, params: {id: profile.to_param,  profile: new_attributes}, session: valid_session
           expect(assigns(:profile)).to eq(profile)
         end
 
         it 'should redirect to root' do
-          put :update, params: {user_id: stranger.to_param, profile: new_attributes}, session: valid_session
+          put :update, params: {id: profile.to_param,  profile: new_attributes}, session: valid_session
           expect(response).to redirect_to(root_path)
         end
       end
     end
 
     describe "DELETE #destroy" do
-      context 'for profile owner' do
-        it "destroys the requested profile" do
-          profile_owner.create_profile valid_attributes
-          expect {
-            delete :destroy, params: {user_id: profile_owner.to_param}, session: valid_session
-          }.to change(Profile, :count).by(-1)
+      context 'for user with permissions' do
+        shared_examples 'user with permission' do
+          before :example do
+            sign_in user_with_permission
+          end
+
+          it "destroys the requested profile" do
+            expect {
+              delete :destroy, params: {id: profile.to_param}, session: session
+            }.to change(Profile, :count).by(-1)
+          end
+
+          it "redirects to the root" do
+            delete :destroy, params: {id: profile.to_param}, session: session
+            expect(response).to redirect_to(root_path)
+          end
         end
 
-        it "redirects to the root" do
-          profile_owner.create_profile valid_attributes
-          delete :destroy, params: {user_id: profile_owner.to_param}, session: valid_session
-          expect(response).to redirect_to(root_path)
+        context 'for owner' do
+          it_behaves_like 'user with permission' do
+            let(:user_with_permission) { profile_owner }
+            let(:subject_profile) { profile }
+            let(:session) { valid_session }
+          end
         end
+
+        context 'for admin' do
+          it_behaves_like 'user with permission' do
+            let(:user_with_permission) { admin }
+            let(:subject_profile) { profile }
+            let(:session) { valid_session }
+          end
+        end
+
       end
 
       context 'for stranger' do
         before(:example) do
-          #TODO: update after authorization implementation
-          skip("Not implemented yet")
+          sign_in stranger
         end
 
         it 'should not destroy profile' do
-          profile_owner.create_profile valid_attributes
           expect {
-            delete :destroy, params: {user_id: stranger.to_param}, session: valid_session
-          }.tonot_ change(Profile, :count)
+            delete :destroy, params: {id: profile.to_param}, session: valid_session
+          }.to_not change(Profile, :count)
         end
 
         it 'should redirect to root' do
-          profile_owner.create_profile valid_attributes
-          delete :destroy, params: {user_id: stranger.to_param}, session: valid_session
+          delete :destroy, params: {id: profile.to_param}, session: valid_session
           expect(response).to redirect_to(root_path)
         end
       end
