@@ -4,8 +4,8 @@ RSpec.describe UsersHelper, type: :helper do
   describe '#actual_profile_path' do
     let(:user_without_profile) { create(:user) }
     let(:user_with_profile) { create(:user_with_profile) }
-    let(:new_path) { new_user_profile_path(user_without_profile) }
-    let(:show_path) { user_profile_path(user_with_profile) }
+    let(:new_path) { new_profile_path }
+    let(:show_path) { profile_path(user_with_profile.profile) }
 
     it 'should generate new profile link for user without profile' do
       expect(helper.actual_profile_path(user_without_profile)). to eq new_path

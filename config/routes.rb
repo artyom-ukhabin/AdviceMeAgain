@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  root "users#index"
+  root "welcome#index"
 
-  resources :users do
-    resource :profile
-  end
+  get 'welcome/index', as: :welcome
+
+  ActiveAdmin.routes(self)
+  devise_for :users
+
+  resources :profiles, except: [:index]
 end

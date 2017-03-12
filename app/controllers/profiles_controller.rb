@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:new, :create]
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :forbid_changes_for_strangers, only: [:edit, :update, :destroy]
 
@@ -24,7 +24,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to [@user, @profile], notice: 'Profile was successfully created.' }
+        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -38,7 +38,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to [@user, @profile], notice: 'Profile was successfully updated.' }
+        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -60,17 +60,20 @@ class ProfilesController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:user_id])
+    @user = current_user
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_profile
-    @profile = @user.profile
+    @profile = Profile.find(params[:id])
   end
 
   def forbid_changes_for_strangers #TODO: think about pundit/cancan
-    #TODO: update after authorization implementation
-    #redirect_to root_path unless #current_user == @profile.user
+    redirect_to root_path unless can_edit_profile?(current_user)
+  end
+
+  def can_edit_profile?(user)
+    user == @profile.user || user.admin?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
