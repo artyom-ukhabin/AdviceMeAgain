@@ -3,8 +3,6 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :forbid_changes_for_strangers, only: [:edit, :update, :destroy]
 
-  helper_method :can_edit_profile?
-
   # GET /profiles/1
   # GET /profiles/1.json
   def show

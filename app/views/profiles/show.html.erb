@@ -15,4 +15,4 @@
   <%= @profile.info %>
 </p>
 
-<%= link_to 'Edit', edit_profile_path(@profile) if can_edit_profile?(current_user) %>
+<%= link_to 'Edit', edit_profile_path(@profile) if can_edit_profile?(current_user, @profile) %>
