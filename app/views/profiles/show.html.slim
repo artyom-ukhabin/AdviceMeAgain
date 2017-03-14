@@ -1,0 +1,11 @@
+p#notice
+  = notice
+
+p
+  .strong Name: #{@profile.name}
+p
+  .strong City: #{@profile.city}
+p
+  .strong Info: #{@profile.info}
+
+= link_to 'Edit', edit_profile_path(@profile) if can_edit_profile?(current_user, @profile)
