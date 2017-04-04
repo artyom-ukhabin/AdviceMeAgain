@@ -1,0 +1,27 @@
+h1 Listing personalities
+
+table
+  thead
+    tr
+      th Name
+      th Born date
+      th Death date
+      th Info
+      th
+      th
+      th
+
+  tbody
+    - @personalities.each do |personality|
+      tr
+        td = personality.name
+        td = personality.born_date
+        td = personality.death_date
+        td = personality.info
+        td = link_to 'Show', personality
+        td = link_to 'Edit', edit_personality_path(personality)
+        td = link_to 'Destroy', personality, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Personality', new_personality_path

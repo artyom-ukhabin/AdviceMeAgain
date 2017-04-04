@@ -1,0 +1,10 @@
+h1 Listing content
+
+- #TODO: rewrite. Think about partials with native name
+
+- @content.each do |content_collection|
+  = render partial: "#{content_collection.first.class.name.downcase}/table", locals: {content_collection: content_collection}
+
+- #TODO: rewrite
+br
+= link_to 'All content', content_index_path if @content.size == 1

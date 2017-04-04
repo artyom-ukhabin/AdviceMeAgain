@@ -1,0 +1,16 @@
+p
+  strong Name:
+  = @personality.name
+p
+  strong Born date:
+  = @personality.born_date
+p
+  strong Death date:
+  = @personality.death_date
+p
+  strong Info:
+  = @personality.info
+
+= link_to 'Edit', edit_personality_path(@personality)
+'  |
+= link_to 'Back', personalities_path

@@ -1,0 +1,25 @@
+h2 Books
+
+table
+  thead
+    tr
+      th Name
+      th Year
+      th Genre
+      th Info
+      th
+      th
+      th
+
+  tbody
+    - content_collection.each do |book|
+      tr
+        td = book.name
+        td = book.year
+        td = book.genre
+        td = book.info
+        td = link_to 'Show', book
+        td = link_to 'Edit', edit_book_path(book)
+        td = link_to 'Destroy', book, data: {confirm: 'Are you sure?'}, method: :delete
+
+= link_to 'New Book', new_book_path
