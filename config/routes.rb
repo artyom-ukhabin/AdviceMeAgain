@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   resources :bands, controller: 'content', type: 'band'
   resources :games, controller: 'content', type: 'game'
   resources :movies, controller: 'content', type: 'movie'
+
+  resources :content_rates, only: [:create, :update, :destroy], controller: 'rates', type: 'content' #TODO: Think about nesting
+  resources :personality_rates, only: [:create, :update, :destroy], controller: 'rates', type: 'personality' #TODO: Think about nesting
 end

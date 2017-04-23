@@ -1,0 +1,33 @@
+div id="content_#{content_data[:subject].id}"
+  p
+    strong Name:
+    = content_data[:subject].name
+  p
+    strong Year:
+    = content_data[:subject].year
+  p
+    strong Genre:
+    = content_data[:subject].genre
+  p
+    strong Info:
+    = content_data[:subject].info
+  p
+    strong Albums:
+    ul
+      - content_data[:albums_collection].each do |album_collection|
+        - #TODO: check syntax
+        li = "Name: #{album_collection[:album].name}"
+        li Tracks:
+        ul
+          - album_collection[:tracks].each do |track|
+            li = "Name: #{track.name}, duration: #{track.duration}"
+
+  = render partial: 'rates/rating', locals: \
+      { average_rating: content_data[:average_rating], user_rating: content_data[:user_rating],
+        rateable: content_data[:subject] }
+
+br
+
+= link_to 'Edit', edit_band_path(content_data[:subject])
+'  |
+= link_to 'Back', bands_path

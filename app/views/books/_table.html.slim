@@ -1,0 +1,29 @@
+h2 Books
+
+table
+  thead
+    tr
+      th Name
+      th Year
+      th Genre
+      th Info
+      th Average Rating
+      th
+      th
+      th
+      th Your Rating
+
+  tbody
+    - content_collection.each do |book_hash|
+      tr id="content_#{book_hash[:subject].id}"
+        td = book_hash[:subject].name
+        td = book_hash[:subject].year
+        td = book_hash[:subject].genre
+        td = book_hash[:subject].info
+        td.average_rating = book_hash[:average_rating]
+        td = link_to 'Show', book_hash[:subject]
+        td = link_to 'Edit', edit_book_path(book_hash[:subject])
+        td = link_to 'Destroy', book_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
+        td.user_rating_wrapper = render partial: 'rates/user_rating_panel', locals: { rate: book_hash[:user_rating], rateable: book_hash[:subject] }
+
+= link_to 'New Book', new_book_path

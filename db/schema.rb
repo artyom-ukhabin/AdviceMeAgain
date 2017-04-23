@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403134104) do
+ActiveRecord::Schema.define(version: 20170418153702) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 20170403134104) do
     t.integer "platform_id", null: false
   end
 
+  create_table "content_rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "content_id"
+    t.integer  "user_id"
+    t.integer  "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_content_rates_on_content_id", using: :btree
+    t.index ["user_id"], name: "index_content_rates_on_user_id", using: :btree
+  end
+
   create_table "personalities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.date     "born_date"
@@ -62,6 +72,16 @@ ActiveRecord::Schema.define(version: 20170403134104) do
     t.text     "info",       limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "personality_rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "personality_id"
+    t.integer  "user_id"
+    t.integer  "value"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["personality_id"], name: "index_personality_rates_on_personality_id", using: :btree
+    t.index ["user_id"], name: "index_personality_rates_on_user_id", using: :btree
   end
 
   create_table "platforms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -112,6 +132,10 @@ ActiveRecord::Schema.define(version: 20170403134104) do
   end
 
   add_foreign_key "albums", "content"
+  add_foreign_key "content_rates", "content"
+  add_foreign_key "content_rates", "users"
+  add_foreign_key "personality_rates", "personalities"
+  add_foreign_key "personality_rates", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "tracks", "albums"
 end

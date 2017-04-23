@@ -1,0 +1,36 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+
+#TODO: learn about coffecsript
+#TODO: learn about file organization
+#TODO: learn about classes
+
+$(document).on "turbolinks:load", ->
+  $(".user_rating").each (index, element) ->
+    ratify(element)
+
+$(document).on 'turbolinks:before-cache',  ->
+  $(".user_rating").each (index, element) ->
+    $(element).raty('destroy')
+
+#TODO: learn coffeescript
+
+window.ratify = (element) ->
+  $(element).raty({
+    score: $(element).data('score')
+    cancel: $(element).data('cancel')
+    cancelPlace: 'right'
+    click: (score, evt) ->
+      form = $(element).siblings('.user_rating_form').children('.edit_rate, .new_rate')
+      if(targetIsCansel(evt.currentTarget)) #TODO: try send form with delete
+        $.ajax $(element).data('url') + $(element).data('id'),
+          type: 'DELETE'
+          data: form.serialize()
+      else
+        $(form).children("#rate_value").val(score)
+        $(form).trigger('submit.rails');
+  })
+
+targetIsCansel = (target) ->
+  target.className == "raty-cancel"

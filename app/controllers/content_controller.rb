@@ -1,17 +1,16 @@
 class ContentController < ApplicationController
   def index
-    #TODO: rewrite
-    @content = []
-    current_types = set_types_collection
+    @content_data = []
+    current_types = set_types
     current_types.each do |content_type|
-      @content << content_type.classify.constantize.all
+      @content_data << build_single_type_array(content_type)
     end
   end
 
   def show
     content = Content.find(params[:id])
-    content_view_data = ContentDataCollectors::ContentDataCollector.new(content).collect
-    render "#{current_type}/show", locals: {content_data: content_view_data}
+    decorated_content = ContentDecorators::ContentDecorator.for_show_action(content, current_user)
+    render "#{current_type.tableize}/show", locals: {content_data: decorated_content}
   end
 
   def new
@@ -60,12 +59,20 @@ class ContentController < ApplicationController
     params.require(current_type.underscore.to_sym).permit(:name, :genre, :year, :info, :timing)
   end
 
-  def set_types_collection
+  def set_types
     type = current_type
     type ? [type] : Content::TYPES #TODO: make url more native
   end
 
   def current_type
     params[:type] if Content::TYPES.include?(params[:type])
+  end
+
+  def build_single_type_array(content_type)
+    specific_type_data = []
+    content_type.classify.constantize.all.each do |content|
+      specific_type_data << ContentDecorators::ContentDecorator.for_index_action(content, current_user)
+    end
+    specific_type_data
   end
 end

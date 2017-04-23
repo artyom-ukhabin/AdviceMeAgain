@@ -6,7 +6,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          #:confirmable, TODO: enable later
          :recoverable, :rememberable, :trackable, :validatable
-  has_one :profile
+
+  has_one :profile, dependent: :destroy
+  has_many :content_rates, dependent: :destroy
+  has_many :personality_rates, dependent: :destroy
 
   private
 

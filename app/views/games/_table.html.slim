@@ -1,0 +1,31 @@
+h2 Games
+
+table
+  thead
+    tr
+      th Name
+      th Year
+      th Genre
+      th Info
+      th Platforms
+      th Average Rating
+      th
+      th
+      th
+      th Your Rating
+
+  tbody
+    - content_collection.each do |game_hash|
+      tr id="content_#{game_hash[:subject].id}"
+        td = game_hash[:subject].name
+        td = game_hash[:subject].year
+        td = game_hash[:subject].genre
+        td = game_hash[:subject].info
+        td = game_hash[:platforms]
+        td.average_rating = game_hash[:average_rating]
+        td = link_to 'Show', game_hash[:subject]
+        td = link_to 'Edit', edit_game_path(game_hash[:subject])
+        td = link_to 'Destroy', game_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
+        td.user_rating_wrapper = render partial: 'rates/user_rating_panel', locals: { rate: game_hash[:user_rating], rateable: game_hash[:subject] }
+
+= link_to 'New Game', new_game_path

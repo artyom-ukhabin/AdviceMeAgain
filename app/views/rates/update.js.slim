@@ -1,0 +1,3 @@
+| $("##{@wrapper_id}").children(".average_rating").html("#{@average_rating}");
+| $("##{@wrapper_id}").children(".user_rating_wrapper").html("#{j(render partial: 'rates/user_rating_panel', locals: { rate: @rate, rateable: @rateable})}");
+| ratify($("##{@wrapper_id}").children(".user_rating_wrapper").find(".user_rating"))

@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery-ui/datepicker-ru
+//= require jquery.raty.min
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets

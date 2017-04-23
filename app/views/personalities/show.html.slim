@@ -1,16 +1,21 @@
-p
-  strong Name:
-  = @personality.name
-p
-  strong Born date:
-  = @personality.born_date
-p
-  strong Death date:
-  = @personality.death_date
-p
-  strong Info:
-  = @personality.info
+div id="personality_#{@personality_data[:subject].id}"
+  p
+    strong Name:
+    = @personality_data[:subject].name
+  p
+    strong Born date:
+    = @personality_data[:subject].born_date
+  p
+    strong Death date:
+    = @personality_data[:subject].death_date
+  p
+    strong Info:
+    = @personality_data[:subject].info
 
-= link_to 'Edit', edit_personality_path(@personality)
+  = render partial: 'rates/rating', locals: \
+        {average_rating: @personality_data[:average_rating], user_rating: @personality_data[:user_rating],
+          rateable: @personality_data[:subject]}
+
+= link_to 'Edit', edit_personality_path(@personality_data[:subject])
 '  |
 = link_to 'Back', personalities_path

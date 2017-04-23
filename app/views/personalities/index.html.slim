@@ -7,20 +7,24 @@ table
       th Born date
       th Death date
       th Info
+      th Average Rating
       th
       th
       th
+      th Your Rating
 
   tbody
-    - @personalities.each do |personality|
-      tr
-        td = personality.name
-        td = personality.born_date
-        td = personality.death_date
-        td = personality.info
-        td = link_to 'Show', personality
-        td = link_to 'Edit', edit_personality_path(personality)
-        td = link_to 'Destroy', personality, data: { confirm: 'Are you sure?' }, method: :delete
+    - @personalities_collection.each do |personality_hash|
+      tr id="personality_#{personality_hash[:subject].id}"
+        td = personality_hash[:subject].name
+        td = personality_hash[:subject].born_date
+        td = personality_hash[:subject].death_date
+        td = personality_hash[:subject].info
+        td.average_rating = personality_hash[:average_rating]
+        td = link_to 'Show', personality_hash[:subject]
+        td = link_to 'Edit', edit_personality_path(personality_hash[:subject])
+        td = link_to 'Destroy', personality_hash[:subject], data: { confirm: 'Are you sure?' }, method: :delete
+        td.user_rating_wrapper = render partial: 'rates/user_rating_panel', locals: { rate: personality_hash[:user_rating], rateable: personality_hash[:subject] }
 
 br
 
