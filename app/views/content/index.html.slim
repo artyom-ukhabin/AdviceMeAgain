@@ -3,7 +3,7 @@ h1 Listing content
 - #TODO: rewrite. Think about partials with native name
 
 - @content_data.each do |content_collection|
-  = render partial: "#{content_collection.first[:subject].class.name.tableize}/table", locals: {content_collection: content_collection}
+  = render partial: "/content/#{content_collection.first[:subject].class.name.tableize}/table", locals: {content_collection: content_collection}
 
 - #TODO: rewrite
 br

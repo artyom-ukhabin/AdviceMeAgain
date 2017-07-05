@@ -1,0 +1,27 @@
+div id="movie_#{content_data[:subject].id}"
+  p
+    strong Name:
+    = content_data[:subject].name
+  p
+    strong Year:
+    = content_data[:subject].year
+  p
+    strong Genre:
+    = content_data[:subject].genre
+  p
+    strong Info:
+    = content_data[:subject].info
+  p
+    strong Timing:
+    = content_data[:subject].timing
+
+  = render partial: 'content_rates/rating', locals: \
+      { average_rating: content_data[:average_rating], rate: content_data[:user_rating] }
+  = render partial: 'content_reviews/reviews_section', locals: \
+      { reviews_collection: content_data[:reviews_collection], new_review: content_data[:new_review]}
+
+br
+
+= link_to 'Edit', edit_movie_path(content_data[:subject])
+'  |
+= link_to 'Back', movies_path

@@ -6,6 +6,8 @@
 #TODO: learn about file organization
 #TODO: learn about classes
 
+#TODO: find plase to this
+
 $(document).on "turbolinks:load", ->
   $(".user_rating").each (index, element) ->
     ratify(element)
@@ -22,13 +24,13 @@ window.ratify = (element) ->
     cancel: $(element).data('cancel')
     cancelPlace: 'right'
     click: (score, evt) ->
-      form = $(element).siblings('.user_rating_form').children('.edit_rate, .new_rate')
+      form = $(element).siblings('.user_rating_form').children('form')
       if(targetIsCansel(evt.currentTarget)) #TODO: try send form with delete
         $.ajax $(element).data('url') + $(element).data('id'),
           type: 'DELETE'
           data: form.serialize()
       else
-        $(form).children("#rate_value").val(score)
+        $(form).children('.rate_value').val(score)
         $(form).trigger('submit.rails');
   })
 

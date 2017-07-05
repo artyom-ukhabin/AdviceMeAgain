@@ -2,6 +2,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
 
+  protected
+
+  def params_with_user(params)
+    params.merge! current_user_hash
+  end
+
+  def current_user_hash
+    { user_id: current_user.id }
+  end
+
   private
 
   def authenticate_active_admin_user!

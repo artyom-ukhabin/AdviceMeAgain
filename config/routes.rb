@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   root "welcome#index"
-
   get 'welcome/index', as: :welcome
 
   ActiveAdmin.routes(self)
   devise_for :users
 
   resources :profiles, except: [:index]
+
   resources :personalities
 
   resources :content, only: [:index]
@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   resources :games, controller: 'content', type: 'game'
   resources :movies, controller: 'content', type: 'movie'
 
-  resources :content_rates, only: [:create, :update, :destroy], controller: 'rates', type: 'content' #TODO: Think about nesting
-  resources :personality_rates, only: [:create, :update, :destroy], controller: 'rates', type: 'personality' #TODO: Think about nesting
+  resources :posts
+
+  resources :content_rates, only: [:create, :update, :destroy]
+  resources :personality_rates, only: [:create, :update, :destroy]
+
+  resources :content_reviews, only: [:edit, :create, :update, :destroy]
+  resources :personality_reviews, only: [:edit, :create, :update, :destroy]
 end

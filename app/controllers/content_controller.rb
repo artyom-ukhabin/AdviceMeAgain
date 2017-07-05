@@ -9,8 +9,8 @@ class ContentController < ApplicationController
 
   def show
     content = Content.find(params[:id])
-    decorated_content = ContentDecorators::ContentDecorator.for_show_action(content, current_user)
-    render "#{current_type.tableize}/show", locals: {content_data: decorated_content}
+    decorated_content = ContentDecorators.data_for_show_action(content, current_user)
+    render "/content/#{current_type.tableize}/show", locals: {content_data: decorated_content}
   end
 
   def new
@@ -71,7 +71,7 @@ class ContentController < ApplicationController
   def build_single_type_array(content_type)
     specific_type_data = []
     content_type.classify.constantize.all.each do |content|
-      specific_type_data << ContentDecorators::ContentDecorator.for_index_action(content, current_user)
+      specific_type_data << ContentDecorators.data_for_index_action(content, current_user)
     end
     specific_type_data
   end

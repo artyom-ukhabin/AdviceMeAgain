@@ -1,6 +1,3 @@
-class PersonalityRate < ApplicationRecord
+class PersonalityRate < Base::Rate
   belongs_to :personality
-  belongs_to :user
-
-  scope :for_user, ->(user) { where(user_id: user.to_param) }
 end

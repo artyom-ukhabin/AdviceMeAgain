@@ -1,13 +1,13 @@
-class PersonalitiesController < InheritedResources::Base
+class PersonalitiesController < ApplicationController
   def index
     @personalities_collection = Personality.all.map do |personality|
-      PersonalityDecorator.new.decorate(personality, current_user)
+      PersonalityDecorator.new.for_index_action(personality, current_user)
     end
   end
 
   def show
     personality = Personality.find(params[:id])
-    @personality_data = PersonalityDecorator.new.decorate(personality, current_user)
+    @personality_data = PersonalityDecorator.new.for_show_action(personality, current_user)
   end
 
   def new

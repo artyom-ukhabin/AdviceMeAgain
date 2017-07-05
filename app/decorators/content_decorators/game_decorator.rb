@@ -1,15 +1,20 @@
 module ContentDecorators
-  class GameDecorator
-    def decorate(game, user)
-      decorated_game = {}
-      decorated_game[:subject] = game
-      decorated_game[:average_rating] = game.average_rating
-      decorated_game[:user_rating] = game.rating(user)
-      decorated_game[:platforms] = decorated_platforms(game)
-      decorated_game
+  class GameDecorator < BaseDecorator
+    def subclass_index_data(game, user)
+      build_platforms_hash(game)
+    end
+
+    def subclass_show_data(game, user)
+      build_platforms_hash(game)
     end
 
     private
+
+    def build_platforms_hash(game)
+      additional_data = {}
+      additional_data[:platforms] = decorated_platforms(game)
+      additional_data
+    end
 
     def decorated_platforms(game)
       game.platforms.map(&:name).join(" ")

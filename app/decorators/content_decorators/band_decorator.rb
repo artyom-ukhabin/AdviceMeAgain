@@ -1,12 +1,9 @@
 module ContentDecorators
-  class BandDecorator
-    def decorate(band, user)
-      decorated_band = {}
-      decorated_band[:subject] = band
-      decorated_band[:albums_collection] = build_album_collection(band)
-      decorated_band[:average_rating] = band.average_rating
-      decorated_band[:user_rating] = band.rating(user)
-      decorated_band
+  class BandDecorator < BaseDecorator
+    def subclass_index_data(band, user)
+      additional_data = {}
+      additional_data[:albums_collection] = build_album_collection(band)
+      additional_data
     end
 
     private

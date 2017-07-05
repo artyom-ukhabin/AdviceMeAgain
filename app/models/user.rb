@@ -8,8 +8,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :profile, dependent: :destroy
-  has_many :content_rates, dependent: :destroy
-  has_many :personality_rates, dependent: :destroy
+  has_many :rates, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   private
 

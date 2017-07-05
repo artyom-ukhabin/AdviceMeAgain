@@ -1,0 +1,29 @@
+h2 Bands
+
+table
+  thead
+    tr
+      th Name
+      th Year
+      th Genre
+      th Info
+      th Average Rating
+      th
+      th
+      th
+      th Your Rating
+
+  tbody
+    - content_collection.each do |band_hash|
+      tr id="band_#{band_hash[:subject].id}"
+        td = band_hash[:subject].name
+        td = band_hash[:subject].year
+        td = band_hash[:subject].genre
+        td = band_hash[:subject].info
+        td.average_rating = band_hash[:average_rating]
+        td = link_to 'Show', band_hash[:subject]
+        td = link_to 'Edit', edit_band_path(band_hash[:subject])
+        td = link_to 'Destroy', band_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
+        td.user_rating_wrapper = render partial: 'content_rates/user_rating_panel', locals: { rate: band_hash[:user_rating] }
+
+= link_to 'New Band', new_band_path

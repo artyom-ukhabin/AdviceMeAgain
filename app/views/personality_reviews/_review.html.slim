@@ -1,0 +1,11 @@
+div id="review_#{review.id}"
+  p
+    strong Author:
+    = author_profile.name
+  p
+    strong Body:
+    = review.body
+    '
+    = link_to 'Edit', edit_personality_review_path(review), remote: true
+    '
+    = link_to 'Destroy', review, data: {confirm: 'Are you sure?'}, method: :delete, remote: true
