@@ -1,0 +1,18 @@
+= form_for post_data[:subject], remote: true do |f|
+  - if post_data[:subject].errors.any?
+    #error_explanation
+      h2 = "#{pluralize(post_data[:subject].errors.count, "error")} prohibited this post from being saved:"
+      ul
+        - post_data[:subject].errors.full_messages.each do |message|
+          li = message
+
+  .main_form_area data-max-sections-amount="#{post_data[:max_sections_amount]}"
+    = link_to 'X', post_path(post_data[:subject]), class: 'clear_focus_link', remote: true
+
+    .field
+      = f.label :title
+      = f.text_field :title
+    = render 'posts/form_data/existed_content_fields', max_sections_amount: post_data[:max_sections_amount],
+        content_data: post_data[:content_data], section_data: post_data[:section_data]
+
+  .actions = f.submit

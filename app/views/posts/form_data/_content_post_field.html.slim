@@ -1,0 +1,6 @@
+.field
+  = label_tag :content
+  -# TODO: >> fix this immediatly
+  = text_field_tag 'post[raw_content_posts_attributes][][name]', name, class: 'content_input', data: {'autocomplete-action-name': 'search'}
+  = hidden_field_tag 'post[raw_content_posts_attributes][][position]', position, class: 'content_position'
+  = link_to('Remove content', '#', class: "remove_content_field")

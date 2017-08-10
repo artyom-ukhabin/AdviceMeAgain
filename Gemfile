@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'pluck_to_hash', '~> 1.0.2'
 gem 'bootstrap-sass', '~> 3.3.7'
 
 gem 'slim-rails', '~>3.1.2'

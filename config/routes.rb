@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   root "welcome#index"
   get 'welcome/index', as: :welcome
 
+  concern :searchable do
+    collection do
+      get :search
+    end
+  end
+
   ActiveAdmin.routes(self)
   devise_for :users
 
@@ -10,12 +16,17 @@ Rails.application.routes.draw do
   resources :personalities
 
   resources :content, only: [:index]
-  resources :books, controller: 'content', type: 'book'
-  resources :bands, controller: 'content', type: 'band'
-  resources :games, controller: 'content', type: 'game'
-  resources :movies, controller: 'content', type: 'movie'
+  resources :books, controller: 'content', type: 'book', concerns: :searchable
+  resources :bands, controller: 'content', type: 'band', concerns: :searchable
+  resources :games, controller: 'content', type: 'game', concerns: :searchable
+  resources :movies, controller: 'content', type: 'movie', concerns: :searchable
 
-  resources :posts
+  resources :posts, except: [:new, :index] do
+    member do
+      get 'repost'
+      get 'repost_owners'
+    end
+  end
 
   resources :content_rates, only: [:create, :update, :destroy]
   resources :personality_rates, only: [:create, :update, :destroy]

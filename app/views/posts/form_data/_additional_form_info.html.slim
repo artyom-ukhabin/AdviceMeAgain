@@ -1,0 +1,12 @@
+.default_main_form_area
+  .field
+    = label_tag :post
+    = text_field_tag 'post[title]'
+  = render 'posts/form_data/new_content_fields', section_data: post_data[:section_data]
+
+.default_section_area
+  = render 'posts/form_data/new_section_area', section_data: post_data[:section_data]
+
+.default_content_field
+  = render 'posts/form_data/content_post_field',
+      name: nil, position: post_data[:section_data][:first_content_position]

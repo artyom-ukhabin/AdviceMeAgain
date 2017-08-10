@@ -1,0 +1,24 @@
+div id="post_#{post_data[:subject].id}"
+  p
+    strong Author:
+    = post_data[:author_profile].name
+  p
+    strong Title:
+    = post_data[:subject].title
+  p
+    strong Content:
+    -#TODO: URGENT: n+1 query
+    = render 'posts/content_table', content_data: post_data[:content_data]
+    '
+    -if post_data[:changes_allowed]
+      = link_to 'Edit', edit_post_path(post_data[:subject]), remote: true
+      '
+    -#TODO: move away
+    - if current_user.can_repost?(post_data[:subject])
+      = link_to 'Repost', repost_post_path(post_data[:subject]), remote: true
+      '
+    =link_to 'Repost owners', repost_owners_post_path(post_data[:subject]), remote: true
+    -#TODO: roles, implement on controller level
+    '
+    -if post_data[:changes_allowed]
+      = link_to 'Destroy', post_data[:subject], data: {confirm: 'Are you sure?'}, method: :delete, remote: true

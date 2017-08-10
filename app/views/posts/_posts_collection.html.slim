@@ -1,0 +1,4 @@
+#posts_wrapper
+  - if posts_collection
+    - posts_collection.each do |post_data|
+      = render 'posts/post', post_data: post_data

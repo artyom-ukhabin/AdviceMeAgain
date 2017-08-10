@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609143746) do
+ActiveRecord::Schema.define(version: 20170724192455) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -55,9 +55,14 @@ ActiveRecord::Schema.define(version: 20170609143746) do
     t.integer "platform_id", null: false
   end
 
-  create_table "content_posts", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "post_id",    null: false
-    t.integer "content_id", null: false
+  create_table "content_posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "content_id"
+    t.integer  "post_id"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_content_posts_on_content_id", using: :btree
+    t.index ["post_id"], name: "index_content_posts_on_post_id", using: :btree
   end
 
   create_table "content_rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -119,8 +124,15 @@ ActiveRecord::Schema.define(version: 20170609143746) do
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
+    t.integer  "author_id"
+    t.index ["author_id"], name: "index_posts_on_author_id", using: :btree
+  end
+
+  create_table "posts_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.index ["post_id"], name: "index_posts_users_on_post_id", using: :btree
+    t.index ["user_id"], name: "index_posts_users_on_user_id", using: :btree
   end
 
   create_table "profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -165,6 +177,8 @@ ActiveRecord::Schema.define(version: 20170609143746) do
   end
 
   add_foreign_key "albums", "content"
+  add_foreign_key "content_posts", "content"
+  add_foreign_key "content_posts", "posts"
   add_foreign_key "content_rates", "content"
   add_foreign_key "content_rates", "users"
   add_foreign_key "content_reviews", "content"
@@ -173,7 +187,9 @@ ActiveRecord::Schema.define(version: 20170609143746) do
   add_foreign_key "personality_rates", "users"
   add_foreign_key "personality_reviews", "personalities"
   add_foreign_key "personality_reviews", "users"
-  add_foreign_key "posts", "users"
+  add_foreign_key "posts", "users", column: "author_id"
+  add_foreign_key "posts_users", "posts"
+  add_foreign_key "posts_users", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "tracks", "albums"
 end

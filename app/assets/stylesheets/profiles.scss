@@ -1,3 +1,38 @@
 // Place all the styles related to the Profiles controller here.
 // They will automatically be included in application.css.scss.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@mixin generic-section-area {
+  margin-top: 5px;
+  margin-left: 30px;
+  border: solid 1px black
+}
+
+@mixin generic-main-form-area {
+  border: solid 2px black
+}
+
+.default_content_field {
+  display: none
+}
+
+.section_area {
+  @include generic-section-area;
+}
+
+.default_section_area {
+  @include generic-section-area;
+  display: none
+}
+
+.main_form_area {
+  @include generic-main-form-area;
+  .clear_focus_link {
+    float: right;
+  }
+}
+
+.default_main_form_area {
+  @include generic-main-form-area;
+  display: none
+}

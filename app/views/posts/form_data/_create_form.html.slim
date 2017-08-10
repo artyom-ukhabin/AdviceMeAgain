@@ -1,0 +1,15 @@
+= form_for post_data[:subject], remote: true do |f|
+  - if post_data[:subject].errors.any?
+    #error_explanation
+      h2 = "#{pluralize(post_data[:subject].errors.count, "error")} prohibited this post from being saved:"
+      ul
+        - post_data[:subject].errors.full_messages.each do |message|
+          li = message
+
+  .main_form_area data-max-sections-amount="#{post_data[:max_sections_amount]}"
+    .field
+      = f.label :title
+      = f.text_field :title
+    = render 'posts/form_data/new_content_fields', section_data: post_data[:section_data]
+
+  .actions = f.submit

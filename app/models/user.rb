@@ -7,10 +7,20 @@ class User < ApplicationRecord
          #:confirmable, TODO: enable later
          :recoverable, :rememberable, :trackable, :validatable
 
+  delegate :name, to: :profile
+
   has_one :profile, dependent: :destroy
   has_many :rates, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  has_many :authored_posts, class_name: 'Post', foreign_key: 'author_id', dependent: :nullify
+  has_and_belongs_to_many :published_posts, class_name: 'Post', association_foreign_key: 'post_id', dependent: :nullify
+
+
+
+  #TODO: URGENT: move away
+  def can_repost?(post)
+    !(authored_posts.include?(post) || published_posts.include?(post))
+  end
 
   private
 
