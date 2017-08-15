@@ -6,6 +6,7 @@ class PostDecorator
     show_post_data[:author_profile] = post.author_profile
     show_post_data[:content_data] = post.content_table_data #TODO: URGENT: get rid of n+1 queries everywhere
     show_post_data[:changes_allowed] = post.changeable_by?(current_user) #TODO: Change this when nesting with profile will be implemented
+    show_post_data[:likes_data] = likes_data(current_user, post)
     show_post_data
   end
 
@@ -21,6 +22,13 @@ class PostDecorator
     edit_post_data[:content_data] = ContentPostParamsConverter.for_edit_post_form(raw_content_data)
     edit_post_data.merge! common_form_data
     edit_post_data
+  end
+
+  def likes_data(current_user, post)
+    likes_data = {}
+    likes_data[:already_liked] = post.already_liked_by?(current_user)
+    likes_data[:liked_users_count] = post.liked_users_count
+    likes_data
   end
 
   private

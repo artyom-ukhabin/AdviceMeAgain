@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724192455) do
+ActiveRecord::Schema.define(version: 20170811071329) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -75,6 +75,17 @@ ActiveRecord::Schema.define(version: 20170724192455) do
     t.index ["user_id"], name: "index_content_rates_on_user_id", using: :btree
   end
 
+  create_table "content_review_votes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "content_review_id"
+    t.integer  "vote"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["content_review_id"], name: "index_content_review_votes_on_content_review_id", using: :btree
+    t.index ["user_id", "content_review_id"], name: "idx_crvotes_user_cr", unique: true, using: :btree
+    t.index ["user_id"], name: "index_content_review_votes_on_user_id", using: :btree
+  end
+
   create_table "content_reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "body",       limit: 65535
     t.datetime "created_at",               null: false
@@ -104,6 +115,17 @@ ActiveRecord::Schema.define(version: 20170724192455) do
     t.index ["user_id"], name: "index_personality_rates_on_user_id", using: :btree
   end
 
+  create_table "personality_review_votes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "personality_review_id"
+    t.integer  "vote"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["personality_review_id"], name: "index_personality_review_votes_on_personality_review_id", using: :btree
+    t.index ["user_id", "personality_review_id"], name: "idx_prvotes_user_pr", unique: true, using: :btree
+    t.index ["user_id"], name: "index_personality_review_votes_on_user_id", using: :btree
+  end
+
   create_table "personality_reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "body",           limit: 65535
     t.datetime "created_at",                   null: false
@@ -129,10 +151,19 @@ ActiveRecord::Schema.define(version: 20170724192455) do
   end
 
   create_table "posts_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "user_id"
-    t.integer "post_id"
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_posts_users_on_post_id", using: :btree
     t.index ["user_id"], name: "index_posts_users_on_user_id", using: :btree
+  end
+
+  create_table "posts_users_likes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.index ["post_id"], name: "index_posts_users_likes_on_post_id", using: :btree
+    t.index ["user_id"], name: "index_posts_users_likes_on_user_id", using: :btree
   end
 
   create_table "profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -181,10 +212,14 @@ ActiveRecord::Schema.define(version: 20170724192455) do
   add_foreign_key "content_posts", "posts"
   add_foreign_key "content_rates", "content"
   add_foreign_key "content_rates", "users"
+  add_foreign_key "content_review_votes", "content_reviews"
+  add_foreign_key "content_review_votes", "users"
   add_foreign_key "content_reviews", "content"
   add_foreign_key "content_reviews", "users"
   add_foreign_key "personality_rates", "personalities"
   add_foreign_key "personality_rates", "users"
+  add_foreign_key "personality_review_votes", "personality_reviews"
+  add_foreign_key "personality_review_votes", "users"
   add_foreign_key "personality_reviews", "personalities"
   add_foreign_key "personality_reviews", "users"
   add_foreign_key "posts", "users", column: "author_id"

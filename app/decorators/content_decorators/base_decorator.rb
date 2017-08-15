@@ -13,7 +13,7 @@ module ContentDecorators
 
     def for_show_action(content, user)
       decorated_content = for_index_action(content, user)
-      decorated_content[:reviews_collection] = decorated_reviews(content)
+      decorated_content[:reviews_collection] = decorated_reviews(content, user)
       decorated_content[:new_review] = build_new_review(content, user)
       decorated_content.merge! subclass_show_data(content, user)
       decorated_content

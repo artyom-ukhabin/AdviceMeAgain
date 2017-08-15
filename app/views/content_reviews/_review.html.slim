@@ -1,11 +1,14 @@
-div id="review_#{review.id}"
+div id="review_#{review_data[:review].id}"
   p
     strong Author:
-    = author_profile.name
+    = review_data[:author_profile].name
   p
     strong Body:
-    = review.body
+    = review_data[:review].body
     '
-    = link_to 'Edit', edit_content_review_path(review), remote: true
+    .votes_section
+      = render 'content_reviews/votes_section', review: review_data[:review], votes_data: review_data[:votes_data]
     '
-    = link_to 'Destroy', review, data: {confirm: 'Are you sure?'}, method: :delete, remote: true
+    = link_to 'Edit', edit_content_review_path(review_data[:review]), remote: true
+    '
+    = link_to 'Destroy', review_data[:review], data: {confirm: 'Are you sure?'}, method: :delete, remote: true
