@@ -1,0 +1,34 @@
+div id="band_#{content_data[:subject].id}"
+  p
+    strong Name:
+    = content_data[:subject].name
+  p
+    strong Year:
+    = content_data[:subject].year
+  p
+    strong Genre:
+    = content_data[:subject].genre
+  p
+    strong Info:
+    = content_data[:subject].info
+  p
+    strong Albums:
+    ul
+      - content_data[:albums_collection].each do |album_collection|
+        - #TODO: check syntax
+        li = "Name: #{album_collection[:album].name}"
+        li Tracks:
+        ul
+          - album_collection[:tracks].each do |track|
+            li = "Name: #{track.name}, duration: #{track.duration}"
+
+  = render partial: 'content_rates/rating', locals: \
+      { average_rating: content_data[:average_rating], rate: content_data[:user_rating] }
+  = render partial: 'content_reviews/reviews_section', locals: \
+     {reviews_collection: content_data[:reviews_collection], new_review: content_data[:new_review]}
+
+br
+
+= link_to 'Edit', edit_band_path(content_data[:subject])
+'  |
+= link_to 'Back', bands_path

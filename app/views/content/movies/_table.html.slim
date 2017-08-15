@@ -1,0 +1,30 @@
+h2 Movies
+
+table
+  thead
+    tr
+      th Name
+      th Year
+      th Genre
+      th Info
+      th Timing
+      th Average Rating
+      th
+      th
+      th
+      th Your Rating
+  tbody
+    - content_collection.each do |movie_hash|
+      tr id="movie_#{movie_hash[:subject].id}"
+        td = movie_hash[:subject].name
+        td = movie_hash[:subject].year
+        td = movie_hash[:subject].genre
+        td = movie_hash[:subject].info
+        td = movie_hash[:subject].timing
+        td.average_rating = movie_hash[:average_rating]
+        td = link_to 'Show', movie_hash[:subject]
+        td = link_to 'Edit', edit_movie_path(movie_hash[:subject])
+        td = link_to 'Destroy', movie_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
+        td.user_rating_wrapper = render partial: 'content_rates/user_rating_panel', locals: { rate: movie_hash[:user_rating] }
+
+= link_to 'New Movie', new_movie_path

@@ -1,0 +1,4 @@
+-#TODO: think about draper
+div
+  .user_rating data-score="#{rate.value}" data-cancel="#{show_cansel_button?(rate)}" data-url="#{rate_url(rate)}" data-id="#{rate.id}"
+  .user_rating_form = render partial: 'content_rates/form', locals: { rate: rate }

@@ -1,0 +1,23 @@
+div id="personality_#{@personality_data[:subject].id}"
+  p
+    strong Name:
+    = @personality_data[:subject].name
+  p
+    strong Born date:
+    = @personality_data[:subject].born_date
+  p
+    strong Death date:
+    = @personality_data[:subject].death_date
+  p
+    strong Info:
+    = @personality_data[:subject].info
+
+  = render partial: 'personality_rates/rating', locals: \
+        {average_rating: @personality_data[:average_rating], rate: @personality_data[:user_rating],
+          rateable: @personality_data[:subject]}
+  = render partial: 'personality_reviews/reviews_section', locals: \
+      {reviews_collection: @personality_data[:reviews_collection], new_review: @personality_data[:new_review]}
+
+= link_to 'Edit', edit_personality_path(@personality_data[:subject])
+'  |
+= link_to 'Back', personalities_path

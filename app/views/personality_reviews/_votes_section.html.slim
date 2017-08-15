@@ -1,0 +1,9 @@
+= upvote_section(votes_data, review)
+'
+= upvote_users_link(votes_data[:upvoted_users_count], review)
+'
+= downvote_section(votes_data, review)
+'
+= downvoted_users_link(votes_data[:downvoted_users_count], review)
+'
+= destroy_vote_link(votes_data, review) if already_voted?(votes_data)

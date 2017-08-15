@@ -1,0 +1,12 @@
+-if changes_allowed
+  = link_to 'Edit', edit_post_path(post), remote: true
+  '
+-#TODO: move away
+- if current_user.can_repost?(post)
+  = link_to 'Repost', post_reposts_index_path(post), remote: true
+  '
+=link_to 'Repost owners', post_reposts_create_path(post), remote: true
+-#TODO: roles, implement on controller level
+'
+-if changes_allowed
+  = link_to 'Destroy', post, data: {confirm: 'Are you sure?'}, method: :delete, remote: true

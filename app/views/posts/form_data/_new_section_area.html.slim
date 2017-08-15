@@ -1,0 +1,10 @@
+.field
+  = label_tag :content_type
+  = select_tag 'content_type[]', options_for_select(section_data[:section_types_options]), class: 'content_type_select_box'
+
+.content_field
+  = render 'posts/form_data/content_post_field', name: nil, position: section_data[:first_content_position]
+
+= link_to('Add content', '#', class: "add_content_field")
+br
+= link_to('Remove section', '#', class: "remove_content_section")

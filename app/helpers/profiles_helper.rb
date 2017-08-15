@@ -1,5 +1,5 @@
 module ProfilesHelper
-  def can_edit_profile?(user, profile)
-    user == profile.user || user.admin?
+  def max_number_of_sections?(maximum, current)
+    current >= maximum
   end
 end

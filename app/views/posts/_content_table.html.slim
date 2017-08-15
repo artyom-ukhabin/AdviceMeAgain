@@ -1,0 +1,8 @@
+table
+  - content_data.each do |type, content_array|
+    tr
+      td.content_table_section_name = type
+    - content_array.each do |content|
+      tr
+        td = content.name
+        td = link_to 'Link', content

@@ -1,0 +1,6 @@
+- content_data.each do |type, content_collection|
+  .section_area
+    = render 'posts/form_data/existed_section_area', section_data: section_data,
+        selected_type: type, content_collection: content_collection
+= link_to('Add section', '#', class: "add_content_section",
+    hidden: max_number_of_sections?(max_sections_amount, content_data.length))

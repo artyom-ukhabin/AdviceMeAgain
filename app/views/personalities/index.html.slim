@@ -1,0 +1,31 @@
+h1 Listing personalities
+
+table
+  thead
+    tr
+      th Name
+      th Born date
+      th Death date
+      th Info
+      th Average Rating
+      th
+      th
+      th
+      th Your Rating
+
+  tbody
+    - @personalities_collection.each do |personality_hash|
+      tr id="personality_#{personality_hash[:subject].id}"
+        td = personality_hash[:subject].name
+        td = personality_hash[:subject].born_date
+        td = personality_hash[:subject].death_date
+        td = personality_hash[:subject].info
+        td.average_rating = personality_hash[:average_rating]
+        td = link_to 'Show', personality_hash[:subject]
+        td = link_to 'Edit', edit_personality_path(personality_hash[:subject])
+        td = link_to 'Destroy', personality_hash[:subject], data: { confirm: 'Are you sure?' }, method: :delete
+        td.user_rating_wrapper = render partial: 'personality_rates/user_rating_panel', locals: { rate: personality_hash[:user_rating], rateable: personality_hash[:subject] }
+
+br
+
+= link_to 'New Personality', new_personality_path

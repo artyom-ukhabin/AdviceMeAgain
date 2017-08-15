@@ -1,25 +1,29 @@
 class ProfilesController < ApplicationController
-  before_action :set_user, only: [:new, :create]
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :forbid_changes_for_strangers, only: [:edit, :update, :destroy]
-
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    profile = Profile.find(params[:id])
+    profile_owner = profile.user
+    @profile_data = ProfileDecorator.new.for_show_action(profile, profile_owner, current_user)
   end
 
   # GET /profiles/new
   def new
+    @user = current_user
     @profile = @user.build_profile
   end
 
   # GET /profiles/1/edit
   def edit
+    @profile = Profile.find(params[:id])
+    forbid_changes_for_strangers!(@profile)
   end
 
   # POST /profiles
   # POST /profiles.json
   def create
+    #TODO: disable content_type before send data
+    @user = current_user
     @profile = @user.build_profile(profile_params)
 
     respond_to do |format|
@@ -36,6 +40,8 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
+    @profile = Profile.find(params[:id])
+    forbid_changes_for_strangers!(@profile)
     respond_to do |format|
       if @profile.update(profile_params)
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
@@ -50,6 +56,8 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1
   # DELETE /profiles/1.json
   def destroy
+    @profile = Profile.find(params[:id])
+    forbid_changes_for_strangers!(@profile)
     @profile.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Profile was successfully destroyed.' }
@@ -59,24 +67,10 @@ class ProfilesController < ApplicationController
 
   private
 
-  def set_user
-    @user = current_user
+  def forbid_changes_for_strangers!(profile) #TODO: think about pundit/cancan
+    redirect_to root_path unless profile.changeable_by?(current_user)
   end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_profile
-    @profile = Profile.find(params[:id])
-  end
-
-  def forbid_changes_for_strangers #TODO: think about pundit/cancan
-    redirect_to root_path unless can_edit_profile?(current_user)
-  end
-
-  def can_edit_profile?(user)
-    user == @profile.user || user.admin?
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def profile_params
     params.require(:profile).permit(:name, :city, :info)
   end

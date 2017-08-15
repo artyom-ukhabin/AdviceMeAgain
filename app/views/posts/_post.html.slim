@@ -1,0 +1,16 @@
+div id="post_#{post_data[:subject].id}"
+  p
+    strong Author:
+    = post_data[:author_profile].name
+  p
+    strong Title:
+    = post_data[:subject].title
+  p
+    strong Content:
+    -#TODO: URGENT: n+1 query
+    = render 'posts/content_table', content_data: post_data[:content_data]
+    '
+    = render 'posts/post_actions', post: post_data[:subject], changes_allowed: post_data[:changes_allowed]
+    '
+    .likes_section
+      = render 'posts/post_likes', post: post_data[:subject], likes_data: post_data[:likes_data]

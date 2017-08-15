@@ -1,11 +1,11 @@
-p#notice
-  = notice
+= link_to 'Edit', edit_profile_path(@profile_data[:subject]) if can_edit_profile?(current_user, @profile_data[:subject])
 
 p
-  .strong Name: #{@profile.name}
+  .strong Name: #{@profile_data[:subject].name}
 p
-  .strong City: #{@profile.city}
+  .strong City: #{@profile_data[:subject].city}
 p
-  .strong Info: #{@profile.info}
+  .strong Info: #{@profile_data[:subject].info}
 
-= link_to 'Edit', edit_profile_path(@profile) if can_edit_profile?(current_user, @profile)
+= render "profiles/posts_section", posts_collection: @profile_data[:posts_collection],
+    new_post_data: @profile_data[:new_post_data], changes_allowed: @profile_data[:changes_allowed]
