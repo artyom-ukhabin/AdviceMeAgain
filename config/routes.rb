@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root "welcome#index"
-  get 'welcome/index', as: :welcome
+  get 'welcome', to: "welcome#index", as: :welcome
 
   concern :searchable do
     collection do
@@ -48,4 +48,6 @@ Rails.application.routes.draw do
 
   resources :content_review_votes, only: [:create, :update, :destroy]
   resources :personality_review_votes, only: [:create, :update, :destroy]
+
+  get 'recommendations', to: 'recommendations#index', as: :recommendations
 end
