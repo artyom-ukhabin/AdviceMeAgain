@@ -1,0 +1,5 @@
+- collaborations_data.each do |collaboration_data|
+  = link_to collaboration_data[:item].name, collaboration_data[:item]
+  '
+  = "#{collaboration_data[:prediction]} %"
+  br

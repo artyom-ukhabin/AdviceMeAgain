@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
   root "welcome#index"
   get 'welcome', to: "welcome#index", as: :welcome
 
@@ -50,4 +52,6 @@ Rails.application.routes.draw do
   resources :personality_review_votes, only: [:create, :update, :destroy]
 
   get 'recommendations', to: 'recommendations#index', as: :recommendations
+
+
 end

@@ -3,8 +3,10 @@ class ContentRatesController < ApplicationController
 
   def create
     @rate = ContentRate.new(actual_params)
-    if @rate.save
-      set_view_variables(@rate.content)
+    content = @rate.content
+    updater = RateUpdater.new(@rate, content)
+    if updater.save
+      set_view_variables(content)
       render :update
     else
       render head: 500 #TODO: clarify
@@ -13,8 +15,10 @@ class ContentRatesController < ApplicationController
 
   def update
     @rate = ContentRate.find(params[:id])
-    if @rate.update(actual_params)
-      set_view_variables(@rate.content)
+    content = @rate.content
+    updater = RateUpdater.new(@rate, content)
+    if updater.update(actual_params)
+      set_view_variables(content)
       render :update
     else
       render head: 500 #TODO: clarify
@@ -24,7 +28,8 @@ class ContentRatesController < ApplicationController
   def destroy
     @rate = ContentRate.find(params[:id])
     content = @rate.content
-    if @rate.destroy
+    updater = RateUpdater.new(@rate, content)
+    if updater.destroy
       set_view_variables(content)
       set_new_rate(content, current_user_hash)
       render :update

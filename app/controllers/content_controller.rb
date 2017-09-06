@@ -76,11 +76,9 @@ class ContentController < ApplicationController
   end
 
   def set_index_data(current_types)
-    data = []
-    current_types.each do |content_type|
+    current_types.inject([]) do |data, content_type|
       data << build_single_type_array(content_type)
     end
-    data
   end
 
   def set_search_data(type, term)
@@ -88,10 +86,8 @@ class ContentController < ApplicationController
   end
 
   def build_single_type_array(content_type)
-    specific_type_data = []
-    current_model(content_type).all.each do |content|
+    current_model(content_type).all.inject([]) do |specific_type_data, content|
       specific_type_data << ContentDecorators.data_for_index_action(content, current_user)
     end
-    specific_type_data
   end
 end

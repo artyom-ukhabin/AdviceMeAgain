@@ -9,6 +9,8 @@
 User.create!(email: 'admin@example.com', role: :admin, password: 'password', password_confirmation: 'password')
 User.create!(email: 'test_1@example.com', role: :regular, password: 'password', password_confirmation: 'password')
 User.create!(email: 'test_2@example.com', role: :regular, password: 'password', password_confirmation: 'password')
+User.create!(email: 'test_3@example.com', role: :regular, password: 'password', password_confirmation: 'password')
+User.create!(email: 'test_4@example.com', role: :regular, password: 'password', password_confirmation: 'password')
 Book.create!(name: 'Good Book', genre: 'drama', year: '1999', info: 'such a good book')
 track1 = Track.create!(name: 'track 1')
 track2 = Track.create!(name: 'track 2')

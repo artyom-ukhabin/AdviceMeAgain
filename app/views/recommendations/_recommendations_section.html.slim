@@ -1,0 +1,7 @@
+div.recommendations_section
+  h1 = single_type_recommendations[:type]
+  p
+    strong You might also like:
+    br
+    = show_collaboration_data(single_type_recommendations[:collaborations_data])
+  -#TODO: one template for others sections

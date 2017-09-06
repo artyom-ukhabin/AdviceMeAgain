@@ -1,2 +1,2 @@
-h1 Recommendations#index
-p Find me in app/views/recommendations/index.html.slim
+- @recommendations_data.each do |single_type_recommendations|
+  = render 'recommendations/recommendations_section', single_type_recommendations: single_type_recommendations
