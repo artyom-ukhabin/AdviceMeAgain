@@ -1,0 +1,2 @@
+module Personalities::TokenInputsHelper
+end

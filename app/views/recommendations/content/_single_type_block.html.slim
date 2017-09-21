@@ -1,0 +1,5 @@
+div.recommendations_section
+  h1 = single_type_recommendations[:type]
+  = render 'recommendations/collaborations_section', collaborations_data: single_type_recommendations[:collaborations_data]
+  - single_type_recommendations[:other_recommendations].each do |recommendation_data|
+    = render 'recommendations/regular_section', recommendation_data: recommendation_data

@@ -28,6 +28,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'elasticsearch-model', '~> 5.0.1'
+gem 'elasticsearch-persistence', '~> 5.0.1'
+gem 'elasticsearch-rails', '~> 5.0.1'
+
 gem 'pluck_to_hash', '~> 1.0.2'
 gem 'bootstrap-sass', '~> 3.3.7'
 
@@ -35,6 +39,10 @@ gem 'slim-rails', '~>3.1.2'
 
 gem 'devise', '~> 4.2'
 gem 'activeadmin', '~> 1.0.0.pre4'
+
+gem 'sidekiq', '~> 5.0.4'
+
+gem "select2-rails", '~> 4.0.3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -22,7 +22,7 @@ module VotesHelper
   end
 
   def destroy_vote_link(votes_data, voteable)
-    link_to 'Delete vote', send("#{review_class_name(voteable).underscore}_vote_path", voteable, votes_data[:vote]),
+    link_to 'Delete vote', public_send("#{review_class_name(voteable).underscore}_vote_path", voteable, votes_data[:vote]),
       method: :delete, remote: true
   end
 
@@ -50,18 +50,18 @@ module VotesHelper
 
   #TODO: get rid of send
   def default_create_vote_link(name, value_param, voteable)
-    link_to name, send("#{review_class_name(voteable).underscore}_votes_path", voteable, value_param),
+    link_to name, public_send("#{review_class_name(voteable).underscore}_votes_path", voteable, value_param),
       remote: true, method: :post, class: "user_vote"
   end
 
   #TODO: get rid of send
   def default_update_vote_link(name, value_param, voteable, vote)
-    link_to name, send("#{review_class_name(voteable).underscore}_vote_path", voteable, vote, value_param),
+    link_to name, public_send("#{review_class_name(voteable).underscore}_vote_path", voteable, vote, value_param),
       remote: true, method: :patch, class: "user_vote"
   end
 
   def default_users_link(count, voteable, value_param)
-    link_to count, send("#{review_class_name(voteable).underscore}_votes_path", voteable, value_param), remote: true
+    link_to count, public_send("#{review_class_name(voteable).underscore}_votes_path", voteable, value_param), remote: true
   end
 
   #TODO: think about making some constants global and use them in routes.rb

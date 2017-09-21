@@ -12,6 +12,8 @@ div id="personality_#{@personality_data[:subject].id}"
     strong Info:
     = @personality_data[:subject].info
 
+  = render partial: 'personalities/content_section/wrapper', locals: { content_data: @personality_data[:content_data] }
+
   = render partial: 'personality_rates/rating', locals: \
         {average_rating: @personality_data[:average_rating], rate: @personality_data[:user_rating],
           rateable: @personality_data[:subject]}

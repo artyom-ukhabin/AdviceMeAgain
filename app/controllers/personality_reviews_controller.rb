@@ -5,8 +5,8 @@ class PersonalityReviewsController < Base::ReviewsController
   end
 
   def create
-    @author_profile = current_user.profile
     @personality_review = PersonalityReview.new(actual_params)
+    @review_data = Shared::ReviewDecorator.new.decorate(@personality_review, current_user)
     if @personality_review.save
       render :add_review
     else
@@ -15,9 +15,8 @@ class PersonalityReviewsController < Base::ReviewsController
   end
 
   def update
-    @review_id = params[:id]
     @personality_review = PersonalityReview.find(params[:id])
-    @author_profile = @personality_review.user.profile
+    @review_data = Shared::ReviewDecorator.new.decorate(@personality_review, current_user)
     if @personality_review.update(actual_params)
       render :update_review
     else
@@ -27,7 +26,6 @@ class PersonalityReviewsController < Base::ReviewsController
 
   def destroy
     #TODO: implement first level redo logic on client side
-    @review_id = params[:id]
     @personality_review = PersonalityReview.find(params[:id])
     if @personality_review.destroy
       render :delete_review

@@ -14,8 +14,12 @@ div id="game_#{content_data[:subject].id}"
   p
     strong Platforms:
     = content_data[:platforms]
+
+  = render partial: 'content/personalities_section/wrapper', locals: \
+      { personalities_data: content_data[:personalities_data] }
+
   = render partial: 'content_rates/rating', locals: \
-    { average_rating: content_data[:average_rating], rate: content_data[:user_rating] }
+      { average_rating: content_data[:average_rating], rate: content_data[:user_rating] }
   = render partial: 'content_reviews/reviews_section', locals: \
       {reviews_collection: content_data[:reviews_collection], new_review: content_data[:new_review]}
 

@@ -3,7 +3,8 @@ class PersonalityRatesController < ApplicationController
 
   def create
     @rate = PersonalityRate.new(actual_params)
-    if @rate.save
+    updater = RateUpdater.new(@rate)
+    if updater.save
       set_view_variables(@rate.personality)
       render :update
     else
@@ -13,7 +14,8 @@ class PersonalityRatesController < ApplicationController
 
   def update
     @rate = PersonalityRate.find(params[:id])
-    if @rate.update(actual_params)
+    updater = RateUpdater.new(@rate)
+    if updater.update(actual_params)
       set_view_variables(@rate.personality)
       render :update
     else
@@ -23,6 +25,7 @@ class PersonalityRatesController < ApplicationController
 
   def destroy
     @rate = PersonalityRate.find(params[:id])
+    updater = RateUpdater.new(@rate)
     personality = @rate.personality
     if @rate.destroy
       set_view_variables(personality)

@@ -1,6 +1,8 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'elasticsearch/persistence/model'
+require 'sidekiq/web'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

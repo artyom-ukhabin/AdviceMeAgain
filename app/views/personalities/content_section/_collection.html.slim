@@ -1,0 +1,10 @@
+p
+  strong Content:
+  br
+  - content_data.each do |type, content_collection|
+    .single_type_collection
+      span.content_section_type = "#{content_type_pluralized(type)}:"
+      '
+      - content_collection.each do |content|
+        = link_to content.name, content
+        '

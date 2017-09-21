@@ -1,2 +1,5 @@
-h1 Recommendations#index
-p Find me in app/views/recommendations/index.html.slim
+- #TODO: think about ifs
+- if @recommendations_data[:content_data].present?
+  = render 'recommendations/content/content_block', content_data: @recommendations_data[:content_data]
+- if @recommendations_data[:personalities_data].present?
+  = render 'recommendations/personality/personality_block', personalities_data: @recommendations_data[:personalities_data]

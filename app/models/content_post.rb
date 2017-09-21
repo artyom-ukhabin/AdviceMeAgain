@@ -7,5 +7,4 @@ class ContentPost < ApplicationRecord
   belongs_to :post
 
   scope :ordered_by_position, -> { order :position }
-  scope :group_by_sections, -> { includes(:content) }
 end
