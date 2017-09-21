@@ -1,14 +1,11 @@
 module DecorableWithReviews
-  include DecorableWithVotes
+  REVIEW_DECORATOR = Shared::ReviewDecorator.new #TODO: refactor - constructor and @variable
 
   def decorated_reviews(reviewable, current_user)
-    review_data = []
-    reviewable.reviews.each do |review|
-      current_review = decorate_review(review)
-      current_review[:votes_data] = votes_data(review, current_user)
+    reviewable.reviews.inject([]) do |review_data, review|
+      current_review = decorate_review(review, current_user)
       review_data << current_review
     end
-    review_data
   end
 
   def build_new_review(reviewable, user)
@@ -17,10 +14,9 @@ module DecorableWithReviews
 
   private
 
-  def decorate_review(review)
-    decorated_review = {}
-    decorated_review[:review] = review
-    decorated_review[:author_profile] = review.author_profile
-    decorated_review
+  #TODO: refactor, exchange modules to classes with constructors
+
+  def decorate_review(review, current_user)
+    REVIEW_DECORATOR.decorate(review, current_user)
   end
 end

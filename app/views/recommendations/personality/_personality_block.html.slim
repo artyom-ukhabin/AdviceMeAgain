@@ -1,0 +1,7 @@
+div.recommendations_section
+  h1 Personalities
+  = render 'recommendations/collaborations_section', collaborations_data: personalities_data[:collaborations_data]
+  - personalities_data[:regular_recommendations].each do |recommendation_data|
+    = render 'recommendations/regular_section', recommendation_data: recommendation_data
+  - personalities_data[:content_related_recommendations].each do |recommendation_data|
+    = render 'recommendations/content_related_section', recommendation_data: recommendation_data

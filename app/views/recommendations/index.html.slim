@@ -1,2 +1,5 @@
-- @recommendations_data.each do |single_type_recommendations|
-  = render 'recommendations/recommendations_section', single_type_recommendations: single_type_recommendations
+- #TODO: think about ifs
+- if @recommendations_data[:content_data].present?
+  = render 'recommendations/content/content_block', content_data: @recommendations_data[:content_data]
+- if @recommendations_data[:personalities_data].present?
+  = render 'recommendations/personality/personality_block', personalities_data: @recommendations_data[:personalities_data]

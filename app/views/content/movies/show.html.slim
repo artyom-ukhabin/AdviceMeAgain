@@ -15,6 +15,9 @@ div id="movie_#{content_data[:subject].id}"
     strong Timing:
     = content_data[:subject].timing
 
+  = render partial: 'content/personalities_section/wrapper', locals: \
+      { personalities_data: content_data[:personalities_data] }
+
   = render partial: 'content_rates/rating', locals: \
       { average_rating: content_data[:average_rating], rate: content_data[:user_rating] }
   = render partial: 'content_reviews/reviews_section', locals: \

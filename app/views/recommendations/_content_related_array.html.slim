@@ -1,0 +1,5 @@
+- recommendations_data.each do |single_type_recommendation|
+  .single_type_recommendation
+    span.content_section_type = "#{single_type_recommendation[:type]}:"
+    '
+    = render_content_related_items(single_type_recommendation[:items])

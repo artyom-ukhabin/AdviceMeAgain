@@ -114,7 +114,7 @@ appendNewSection = (anchor_element, main_area, section) ->
 
 setAutocompleteSource = (input) ->
   #TODO: think about it
-  '/' + getSectionType(parentSection(input)) + '/' + $(input).data('autocomplete-action-name')
+  '/' + getSectionType(parentSection(input)) + '/' + $(input).data('autocomplete-action-path')
 
 getSectionType = (section) ->
   $(section).find('.content_type_select_box').val()

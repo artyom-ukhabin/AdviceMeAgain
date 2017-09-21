@@ -54,7 +54,7 @@ module Collaborations
       #TODO: but this problem caused by union of two rate types
       #TODO: need to do something with this shit on analysis phase
       aggregator_type = (Content::TYPES.include? items_type) ? 'Content' : type_class_name(items_type)
-      "Collaborations::#{aggregator_type}QueriesAggregator".constantize.new
+      "Collaborations::#{aggregator_type}QueriesAggregator".constantize.new(items_type)
     end
   end
 end

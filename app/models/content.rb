@@ -16,13 +16,22 @@ class Content < ApplicationRecord
   scope :by_name, ->(name) { where('name = ?', name).first }
   scope :ordered_by_content_post_position, -> { joins(:content_posts).order('content_posts.position') }
   scope :for_post, ->(post) { joins(:content_posts).where('content_posts.post_id = ?', post.id)  }
+  #TODO: refactor: find the way to move scopes with different responsibilities
+  scope :without_personality, ->(personality) { where.not(id: personality.content_ids) }
+  scope :ordered_availables_for_personality, ->(personality) { without_personality(personality).ordered_by_name }
 
   class << self
-    #TODO: think about names for this method and scopes
-    def autocomplete_data(term)
-      with_name(term).ordered_by_name.map(&:name)
+    def check_type(type)
+      type if TYPES.include?(type)
     end
 
+    #TODO: think about names for this method and scopes
+    #TODO: 'searchable' logic, think how reuse it
+    def autocomplete_data(term)
+      with_name(term).ordered_by_name.pluck(:name)
+    end
+
+    #TODO: check why its possible to use with scopes correctly
     def grouped_by_type
       all.group_by(&:type)
     end
@@ -34,6 +43,15 @@ class Content < ApplicationRecord
     #TODO: with knowledge from phase 2 think about these queries
     def data_for_post_table(post)
       for_post(post).ordered_by_content_post_position.grouped_by_type
+    end
+
+    #TODO: think
+    def token_inputs_for_personality(personality, term)
+      ordered_availables_for_personality(personality).with_name(term)
+    end
+
+    def filter_content_types(types)
+      types & TYPES
     end
   end
 end

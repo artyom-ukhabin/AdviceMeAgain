@@ -3,16 +3,21 @@ class PersonalityDecorator
   include DecorableWithRates
   include DecorableWithReviews
 
+  def initialize
+    @content_decorator = PersonalityContentDecorator.new
+  end
+
   def for_index_action(personality, user)
-    decorated_content = initialize_hash(personality)
-    decorated_content.merge! decorated_ratings(personality, user)
-    decorated_content
+    decorated_personality = initialize_hash(personality)
+    decorated_personality.merge! decorated_ratings(personality, user)
+    decorated_personality
   end
 
   def for_show_action(personality, user)
-    decorated_content = for_index_action(personality, user)
-    decorated_content[:reviews_collection] = decorated_reviews(personality, user)
-    decorated_content[:new_review] = build_new_review(personality, user)
-    decorated_content
+    decorated_personality = for_index_action(personality, user)
+    decorated_personality[:content_data] = @content_decorator.content_data(personality)
+    decorated_personality[:reviews_collection] = decorated_reviews(personality, user)
+    decorated_personality[:new_review] = build_new_review(personality, user)
+    decorated_personality
   end
 end

@@ -1,0 +1,2 @@
+module ContentNamespace::SearchNamesHelper
+end

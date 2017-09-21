@@ -3,6 +3,7 @@ h1 Listing content
 - #TODO: rewrite. Think about partials with native name
 
 - @content_data.each do |content_collection|
+  - #TODO: last revision - refactor to hash
   = render partial: "/content/#{content_collection.first[:subject].class.name.tableize}/table", locals: {content_collection: content_collection}
 
 - #TODO: rewrite

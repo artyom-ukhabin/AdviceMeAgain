@@ -1,2 +1,2 @@
-| $("#reviews_wrapper").append("#{j(render "/personality_reviews/review", author_profile: @author_profile, review: @personality_review)}");
+| $("#reviews_wrapper").append("#{j(render "/personality_reviews/review", review_data: @review_data)}");
 | $("#new_personality_review").find("textarea").val('');

@@ -42,6 +42,8 @@ gem 'activeadmin', '~> 1.0.0.pre4'
 
 gem 'sidekiq', '~> 5.0.4'
 
+gem "select2-rails", '~> 4.0.3'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

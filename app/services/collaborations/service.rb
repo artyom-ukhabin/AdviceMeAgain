@@ -1,16 +1,19 @@
 #https://www.toptal.com/algorithms/predicting-likes-inside-a-simple-recommendation-engine
 module Collaborations
   class Service
-    AVAILABLE_TYPES = Content::TYPES + ['personality']
+    PERSONALITY_TYPE = Personality.name.downcase
+    AVAILABLE_TYPES = Content::TYPES + [PERSONALITY_TYPE]
 
     def initialize(items_types = nil)
       items_types = filter_items_types(items_types)
       @handlers_array = fill_handlers_array(items_types)
     end
 
+    #TODO: think about more comfortable interface: without type name if only one type
     def get_collaboration_data(user)
       @handlers_array.inject({}) do |collaboration_data, handler|
         collaboration_data[handler.items_type] = handler.get_collaboration_data(user)
+        collaboration_data
       end
     end
 

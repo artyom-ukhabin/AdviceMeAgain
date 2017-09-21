@@ -1,1 +1,1 @@
-| $("#review_#{@personality_review.id}").html("#{j(render "/personality_reviews/review", review: @personality_review, author_profile: @author_profile)}")
+| $("#review_#{@personality_review.id}").html("#{j(render "/personality_reviews/review", review_data: @review_data)}")
