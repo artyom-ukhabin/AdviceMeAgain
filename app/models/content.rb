@@ -22,7 +22,11 @@ class Content < ApplicationRecord
 
   class << self
     def check_type(type)
-      type if TYPES.include?(type)
+      type if content_type?(type)
+    end
+
+    def content_type?(type)
+      TYPES.include?(type)
     end
 
     #TODO: think about names for this method and scopes

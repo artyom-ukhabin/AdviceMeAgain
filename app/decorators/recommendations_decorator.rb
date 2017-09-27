@@ -1,7 +1,7 @@
 class RecommendationsDecorator
-  def initialize(content_types, include_personality)
-    @content_types = content_types
-    @include_personality = include_personality
+  def initialize(recommendations_types)
+    @content_types = filter_content_types(recommendations_types)
+    @include_personality = check_personality_type(recommendations_types)
     @content_decorator_class = RecommendationsDecorators::RecommendedContentDecorator
     @personality_decorator_class = RecommendationsDecorators::RecommendedPersonalitiesDecorator
   end
@@ -25,5 +25,15 @@ class RecommendationsDecorator
   def set_personalities_data(user)
     personality_decorator = @personality_decorator_class.new
     personality_decorator.recommendations_data(user)
+  end
+
+  #TODO: this two methods should be dried, should be used everywhere
+  def filter_content_types(recommendations_types)
+    Content.filter_content_types(recommendations_types)
+  end
+
+  #TODO: think about model level for personality like for content
+  def check_personality_type(recommendations_types)
+    recommendations_types.include? Personality::TYPE
   end
 end

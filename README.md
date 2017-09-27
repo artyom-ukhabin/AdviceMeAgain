@@ -12,6 +12,7 @@
 * maybe personalities posts
 * >> urgent: classes for coffee
 * optional death date for Personality
+* correct pattern name for thing that I called decorator - facade - see Sandy Metz 4 rules
 
 # Phase 1
 * refactor voting system
@@ -25,6 +26,9 @@
 * add images for selections for personality_content form on personality page
     (options, templateSelection, https://stackoverflow.com/questions/33926375/how-to-pass-option-attributes-to-select2)
 * tabs for recommendation page
+* definitely dirty wrong abstraction with recommendations decorators. Find the way to refactor. Also, fetchers vs decorators?
+* its possible to ajax when page is ready instead of setting @ variable for random recommendations section (now variables just flying around)
+* URGENT: pub-sub system, ^ 3th point (maybe for chat in phase 3)
 
 # Phase 3
 * roles
@@ -45,6 +49,7 @@ Things to learn:
 * folders and namespaces
 * especially: view folders
 * model objects, representers
+* nested layouts, place for layouts logic - helpers? Investigate where to place layouts css/js too.
 
 Phase 2 is in progress.
 

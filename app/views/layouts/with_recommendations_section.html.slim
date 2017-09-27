@@ -1,0 +1,4 @@
+= content_for :content do
+  = render 'layouts/shared/recommendations_section', recommendations_data: @layout_data
+  = yield
+= render template: 'layouts/application'
