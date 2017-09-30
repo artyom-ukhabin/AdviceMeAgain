@@ -11,17 +11,16 @@ module RecommendationsDecorators
         recommendations_data << with_liked_related_content(user)
       end
 
-      #TODO: refactor more - learn more about block and metacode
       def with_highrated_related_content
-        name = __method__.to_s.humanize
-        collection = build_highrated_content_recommendations
-        decorate_content_related_collection(name, collection)
+        related_content_data(__method__) do |content_type|
+          @recommendations_aggregator.with_highrated_related_content(content_type)
+        end
       end
 
       def with_liked_related_content(user)
-        name = __method__.to_s.humanize
-        collection = build_liked_content_recommendations(user)
-        decorate_content_related_collection(name, collection)
+        related_content_data(__method__) do |content_type|
+          @recommendations_aggregator.with_liked_related_content(user, content_type)
+        end
       end
 
       private
@@ -30,16 +29,16 @@ module RecommendationsDecorators
         QueriesAggregators::PersonalityRecommendationsAggregator.new
       end
 
-      def build_highrated_content_recommendations
-        Content::TYPES.inject([]) do |recommendation_collection, content_type|
-          items = @recommendations_aggregator.with_highrated_related_content(content_type)
-          recommendation_collection << decorate_content_related_hash(content_type, items)
-        end
+      def related_content_data(method_name, &block)
+        name = method_name.to_s.humanize
+        #perfomance oriented sending block to another method
+        collection = build_content_recommendations(&Proc.new)
+        decorate_content_related_collection(name, collection)
       end
 
-      def build_liked_content_recommendations(user)
+      def build_content_recommendations(&block)
         Content::TYPES.inject([]) do |recommendation_collection, content_type|
-          items = @recommendations_aggregator.with_liked_related_content(user, content_type)
+          items = yield content_type
           recommendation_collection << decorate_content_related_hash(content_type, items)
         end
       end
