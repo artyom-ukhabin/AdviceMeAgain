@@ -1,14 +1,16 @@
 class PersonalitiesController < ApplicationController
+  layout "with_recommendations_section", only: [:index, :show]
+
   def index
-    respond_to do |format|
-      format.html { @personalities_collection = set_index_data }
-      format.js { render json: set_filtered_data(params[:term]) }
-    end
+    @personalities_collection = set_index_data
+    #TODO: actually, violation of rule provided by Sandi Metz. Think about it later.
+    @layout_data = RandomRecommendation::Fetcher.new([Personality::TYPE]).get_recommendation(current_user)
   end
 
   def show
     personality = Personality.find(params[:id])
     @personality_data = PersonalityDecorator.new.for_show_action(personality, current_user)
+    @layout_data = RandomRecommendation::Fetcher.new([Personality::TYPE]).get_recommendation(current_user)
   end
 
   def new

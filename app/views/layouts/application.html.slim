@@ -7,9 +7,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    = render 'layouts/navbar'
+    = render 'layouts/shared/top_navbar'
 
     = notice
     = alert
 
-    = yield
+    = content_for?(:content) ? yield(:content) : yield

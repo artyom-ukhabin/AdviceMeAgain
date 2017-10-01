@@ -1,15 +1,19 @@
 class ContentController < ApplicationController
+  layout "with_recommendations_section", only: [:index, :show]
+
   include ContentTypesMethods
 
   def index
     current_types = set_types(params[:type])
     @content_data = set_index_data(current_types)
+    @layout_data = RandomRecommendation::Fetcher.new(current_types).get_recommendation(current_user)
   end
 
   def show
     content = Content.find(params[:id])
     current_type = check_type(params[:type])
     decorated_content = ContentDecorators.data_for_show_action(content, current_user)
+    @layout_data = RandomRecommendation::Fetcher.new(current_types).get_recommendation(current_user)
     render "/content/#{current_type.tableize}/show", locals: {content_data: decorated_content}
   end
 

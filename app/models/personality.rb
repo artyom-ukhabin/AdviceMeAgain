@@ -1,4 +1,6 @@
 class Personality < ApplicationRecord
+  TYPE = self.name.downcase
+
   include Rateable
 
   has_and_belongs_to_many :content
