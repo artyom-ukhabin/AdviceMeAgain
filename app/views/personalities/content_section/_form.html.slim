@@ -2,9 +2,9 @@
 
   .field
     = select_tag(:content_ids,
-      options_for_personality_content(@new_relations_data[:related_content_data]),
-      { multiple: true, 'data-url' => content_token_inputs_index_url })
+      options_for_personality_content(new_relations_data[:related_content_data]),
+      { multiple: true, 'data-url' => personality_content_token_inputs_url })
 
-  = hidden_field_tag :personality_id, @new_relations_data[:personality_id]
+  = hidden_field_tag :personality_id, new_relations_data[:personality_id]
 
   .actions = submit_tag('Update Content')

@@ -4,8 +4,8 @@ class User < ApplicationRecord
 
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         #:confirmable, TODO: enable later
-         :recoverable, :rememberable, :trackable, :validatable
+    #:confirmable, TODO: enable later
+    :recoverable, :rememberable, :trackable, :validatable
 
   delegate :name, to: :profile
 
@@ -21,6 +21,10 @@ class User < ApplicationRecord
   #TODO: URGENT: move away
   def can_repost?(post)
     !(authored_posts.include?(post) || published_posts.include?(post))
+  end
+
+  def have_moderator_rights?
+    moderator? || admin?
   end
 
   private

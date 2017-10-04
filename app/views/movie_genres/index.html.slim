@@ -1,0 +1,21 @@
+h1 Listing Movie genres
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @movie_genres.each do |movie_genre|
+      tr
+        td = movie_genre.name
+        td = link_to 'Show', movie_genre_path(movie_genre)
+        td = link_to 'Edit', edit_movie_genre_path(movie_genre)
+        td = link_to 'Destroy', movie_genre, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Movie genre', new_movie_genre_path

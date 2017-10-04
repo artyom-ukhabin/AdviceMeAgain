@@ -5,7 +5,7 @@ table
     tr
       th Name
       th Year
-      th Genre
+      th Genres
       th Info
       th Timing
       th Average Rating
@@ -18,7 +18,7 @@ table
       tr id="movie_#{movie_hash[:subject].id}"
         td = movie_hash[:subject].name
         td = movie_hash[:subject].year
-        td = movie_hash[:subject].genre
+        td = render 'content/movies/genres_in_table', genres_collection: movie_hash[:genres]
         td = movie_hash[:subject].info
         td = movie_hash[:subject].timing
         td.average_rating = movie_hash[:average_rating]
@@ -26,5 +26,3 @@ table
         td = link_to 'Edit', edit_movie_path(movie_hash[:subject])
         td = link_to 'Destroy', movie_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
         td.user_rating_wrapper = render partial: 'content_rates/user_rating_panel', locals: { rate: movie_hash[:user_rating] }
-
-= link_to 'New Movie', new_movie_path

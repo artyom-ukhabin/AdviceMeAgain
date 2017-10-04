@@ -1,0 +1,21 @@
+h1 Listing Game genres
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @game_genres.each do |game_genre|
+      tr
+        td = game_genre.name
+        td = link_to 'Show', game_genre_path(game_genre)
+        td = link_to 'Edit', edit_game_genre_path(game_genre)
+        td = link_to 'Destroy', game_genre, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Game genre', new_game_genre_path

@@ -29,8 +29,14 @@
 * definitely dirty wrong abstraction with recommendations decorators. Find the way to refactor. Also, fetchers vs decorators?
 * its possible to ajax when page is ready instead of setting @ variable for random recommendations section (now variables just flying around)
 * URGENT: pub-sub system, ^ 3th point (maybe for chat in phase 3)
+* reasonability content/collaborative filterings for personality
+* URGENT: refactor genres system - look like sti but with different tables. Very bad solution now.
+  > Start analysis phase from here
+  >(it can be be as elegant as sti if define "find(type, id)" method in parent Genre class: "#{type}Genre.find(id)")
 
 # Phase 3
+* css
+* pub-sub system (for recommendations update or chat)
 * roles
 * <move info here later>
 

@@ -1,0 +1,10 @@
+= form_tag(create_content_genres_path, method: :post, remote: true) do
+
+  .field
+    = select_tag(:genres_ids,
+      options_for_content_genres(genres_data[:related_genres]),
+      { multiple: true, 'data-url' => content_genres_token_inputs_url })
+
+  = hidden_field_tag :content_id, genres_data[:content_id]
+
+  .actions = submit_tag('Update Genres')

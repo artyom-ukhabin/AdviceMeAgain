@@ -1,4 +1,4 @@
-module Personalities
+module ContentPersonalities
   class TokenInputsController < ApplicationController
     def index
       content = Content.find(params[:content_id])

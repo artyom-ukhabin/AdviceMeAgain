@@ -1,0 +1,21 @@
+h1 Listing Band genres
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @band_genres.each do |band_genre|
+      tr
+        td = band_genre.name
+        td = link_to 'Show', band_genre_path(band_genre)
+        td = link_to 'Edit', edit_band_genre_path(band_genre)
+        td = link_to 'Destroy', band_genre, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Band genre', new_band_genre_path

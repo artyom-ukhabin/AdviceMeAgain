@@ -13,7 +13,7 @@ class ContentController < ApplicationController
     content = Content.find(params[:id])
     current_type = check_type(params[:type])
     decorated_content = ContentDecorators.data_for_show_action(content, current_user)
-    @layout_data = RandomRecommendation::Fetcher.new(current_types).get_recommendation(current_user)
+    @layout_data = RandomRecommendation::Fetcher.new([current_type]).get_recommendation(current_user)
     render "/content/#{current_type.tableize}/show", locals: {content_data: decorated_content}
   end
 
@@ -72,6 +72,13 @@ class ContentController < ApplicationController
   end
 
   def build_single_type_array(content_type)
+    data = {}
+    data[:type] = content_type
+    data[:collection] = build_single_type_collection(content_type)
+    data
+  end
+
+  def build_single_type_collection(content_type)
     current_model(content_type).all.inject([]) do |specific_type_data, content|
       specific_type_data << ContentDecorators.data_for_index_action(content, current_user)
     end

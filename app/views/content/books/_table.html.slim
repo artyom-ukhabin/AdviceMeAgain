@@ -5,7 +5,7 @@ table
     tr
       th Name
       th Year
-      th Genre
+      th Genres
       th Info
       th Average Rating
       th
@@ -18,12 +18,10 @@ table
       tr id="book_#{book_hash[:subject].id}"
         td = book_hash[:subject].name
         td = book_hash[:subject].year
-        td = book_hash[:subject].genre
+        td = render 'content/books/genres_in_table', genres_collection: book_hash[:genres]
         td = book_hash[:subject].info
         td.average_rating = book_hash[:average_rating]
         td = link_to 'Show', book_hash[:subject]
         td = link_to 'Edit', edit_book_path(book_hash[:subject])
         td = link_to 'Destroy', book_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
         td.user_rating_wrapper = render partial: 'content_rates/user_rating_panel', locals: { rate: book_hash[:user_rating] }
-
-= link_to 'New Book', new_book_path

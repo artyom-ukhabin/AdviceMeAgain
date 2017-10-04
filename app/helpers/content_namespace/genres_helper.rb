@@ -1,0 +1,2 @@
+module ContentNamespace::GenresHelper
+end

@@ -1,4 +1,4 @@
-module ContentNamespace
+module PersonalityContent
   class TokenInputsController < ApplicationController
     include ContentTypesMethods
 

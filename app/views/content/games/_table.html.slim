@@ -5,7 +5,7 @@ table
     tr
       th Name
       th Year
-      th Genre
+      th Genres
       th Info
       th Platforms
       th Average Rating
@@ -19,7 +19,7 @@ table
       tr id="game_#{game_hash[:subject].id}"
         td = game_hash[:subject].name
         td = game_hash[:subject].year
-        td = game_hash[:subject].genre
+        td = render 'content/games/genres_in_table', genres_collection: game_hash[:genres]
         td = game_hash[:subject].info
         td = game_hash[:platforms]
         td.average_rating = game_hash[:average_rating]
@@ -27,5 +27,3 @@ table
         td = link_to 'Edit', edit_game_path(game_hash[:subject])
         td = link_to 'Destroy', game_hash[:subject], data: {confirm: 'Are you sure?'}, method: :delete
         td.user_rating_wrapper = render partial: 'content_rates/user_rating_panel', locals: { rate: game_hash[:user_rating] }
-
-= link_to 'New Game', new_game_path

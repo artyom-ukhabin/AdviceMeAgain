@@ -6,14 +6,15 @@ div id="movie_#{content_data[:subject].id}"
     strong Year:
     = content_data[:subject].year
   p
-    strong Genre:
-    = content_data[:subject].genre
-  p
     strong Info:
     = content_data[:subject].info
   p
     strong Timing:
     = content_data[:subject].timing
+
+  = render partial: 'content/genres_section/wrapper', locals: \
+      { genres_data: content_data[:genres_data] }
+  br
 
   = render partial: 'content/personalities_section/wrapper', locals: \
       { personalities_data: content_data[:personalities_data] }
