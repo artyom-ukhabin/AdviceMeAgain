@@ -14,9 +14,6 @@
     = f.label :year
     = f.select :year, (Time.zone.now.year - 100)..(Time.zone.now.year + 1)
   .field
-    = f.label :genre
-    = f.text_field :genre
-  .field
     = f.label :info
     = f.text_area :info
 

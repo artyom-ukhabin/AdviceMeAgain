@@ -1,0 +1,23 @@
+h1 Listing Book genres
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @book_genres.each do |book_genre|
+      tr
+        td = book_genre.name
+        - if show_book_genre_show_action?(current_user)
+          td = link_to 'Show', book_genre_path(book_genre)
+        - if show_book_genre_edit_actions?(current_user)
+          td = link_to 'Edit', edit_book_genre_path(book_genre)
+          td = link_to 'Destroy', book_genre, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Book genre', new_book_genre_path

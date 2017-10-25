@@ -13,7 +13,7 @@ class ContentController < ApplicationController
     content = Content.find(params[:id])
     current_type = check_type(params[:type])
     decorated_content = ContentDecorators.data_for_show_action(content, current_user)
-    @layout_data = RandomRecommendation::Fetcher.new(current_types).get_recommendation(current_user)
+    @layout_data = RandomRecommendation::Fetcher.new([current_type]).get_recommendation(current_user)
     render "/content/#{current_type.tableize}/show", locals: {content_data: decorated_content}
   end
 
@@ -28,11 +28,10 @@ class ContentController < ApplicationController
   end
 
   def create
-    #TODO: handle with this shit
     current_type = check_type(params[:type])
-    content_class = current_type.classify.constantize
-    @content = content_class.new(content_params)
-    if @content.save
+    @content = content_class(current_type).new(content_params)
+    updater = ContentUpdater.new(@content)
+    if updater.save
       redirect_to @content, notice: "#{@content.type} was successfully created."
     else
       render :new
@@ -51,13 +50,18 @@ class ContentController < ApplicationController
   def destroy
     @content = Content.find(params[:id])
     type = @content.type
-    @content.destroy
+    updater = ContentUpdater.new(@content)
+    updater.destroy
     #TODO: rewrite with url helper method
     #TODO: think when and where redirect after destroy
     redirect_to "/#{type.tableize}", notice: "#{type} was successfully destroyed."
   end
 
   private
+
+  def content_class(current_type)
+    current_type.classify.constantize
+  end
 
   def content_params
     #TODO: think about it
@@ -72,6 +76,13 @@ class ContentController < ApplicationController
   end
 
   def build_single_type_array(content_type)
+    data = {}
+    data[:type] = content_type
+    data[:collection] = build_single_type_collection(content_type)
+    data
+  end
+
+  def build_single_type_collection(content_type)
     current_model(content_type).all.inject([]) do |specific_type_data, content|
       specific_type_data << ContentDecorators.data_for_index_action(content, current_user)
     end

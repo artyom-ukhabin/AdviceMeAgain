@@ -1,0 +1,5 @@
+- content_based_data.each do |single_recommendation_data|
+  = link_to single_recommendation_data[:item].name, single_recommendation_data[:item]
+  '
+  = "#{single_recommendation_data[:prediction]} %"
+  br

@@ -1,0 +1,10 @@
+= form_tag(create_game_genre_content_path, method: :post, remote: true) do
+
+  .field
+    = select_tag(:content_ids,
+      options_for_personality_content(content_data[:related_content]),
+      { multiple: true, 'data-url' => game_genre_content_token_inputs_url })
+
+  = hidden_field_tag :genre_id, content_data[:genre_id]
+
+  .actions = submit_tag('Update Content')

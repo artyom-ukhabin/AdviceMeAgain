@@ -1,0 +1,4 @@
+#genres_content_wrapper
+  = render 'band_genres/content_section/collection', content_collection: content_data[:related_content]
+  .form_section
+    = link_to 'Edit content', edit_band_genre_content_path(content_data[:genre_id]), remote: true

@@ -1,0 +1,2 @@
+= render "/content/#{@content_data[:type].tableize}/table", content_collection: @content_data[:content_collection]
+= link_to "Back", public_send("#{@content_data[:type].tableize}_path")

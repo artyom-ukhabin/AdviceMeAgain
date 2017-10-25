@@ -1,0 +1,2 @@
+module Genres::TokenInputsHelper
+end

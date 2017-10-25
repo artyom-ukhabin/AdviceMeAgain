@@ -23,7 +23,8 @@ class PersonalitiesController < ApplicationController
 
   def create
     @personality = Personality.new(personality_params)
-    if @personality.save
+    updater = PersonalityUpdater.new(@personality)
+    if updater.save
       redirect_to @personality, notice: 'Personality was successfully created.'
     else
       render :new
@@ -41,7 +42,8 @@ class PersonalitiesController < ApplicationController
 
   def destroy
     @personality = Personality.find(params[:id])
-    @personality.destroy
+    updater = PersonalityUpdater.new(@personality)
+    updater.destroy
     redirect_to personalities_path, notice: 'Personality was successfully destroyed.'
   end
 

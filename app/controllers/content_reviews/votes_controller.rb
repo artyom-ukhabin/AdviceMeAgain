@@ -12,7 +12,7 @@ module ContentReviews
       @content_review = ContentReview.find(params[:content_review_id])
       vote_value = params[:vote_value]
       if @content_review.set_vote(current_user, vote_value)
-        @votes_data = ContentDecorators::BaseDecorator.new.votes_data(@content_review, current_user)
+        @votes_data = Shared::VoteDecorator.new.votes_data(@content_review, current_user)
         render :update
       else
         render head: 500 #TODO: clarify (clarified, its wrong)
@@ -24,7 +24,7 @@ module ContentReviews
       @vote = ContentReviewVote.find(params[:id])
       new_value = params[:vote_value]
       if @content_review.update_vote(@vote, new_value)
-        @votes_data = ContentDecorators::BaseDecorator.new.votes_data(@content_review, current_user)
+        @votes_data = Shared::VoteDecorator.new.votes_data(@content_review, current_user)
         render :update
       else
         render head: 500 #TODO: clarify
@@ -35,7 +35,7 @@ module ContentReviews
       @content_review = ContentReview.find(params[:content_review_id])
       @vote = ContentReviewVote.find(params[:id])
       if @content_review.clear_vote_for(current_user)
-        @votes_data = ContentDecorators::BaseDecorator.new.votes_data(@content_review, current_user)
+        @votes_data = Shared::VoteDecorator.new.votes_data(@content_review, current_user)
         render :update
       else
         render head: 500 #TODO: clarify

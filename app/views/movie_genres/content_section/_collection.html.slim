@@ -1,0 +1,6 @@
+p
+  strong Movies:
+  br
+    - content_collection.each do |content|
+      = link_to content.name, content
+      '

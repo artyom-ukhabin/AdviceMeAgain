@@ -2,9 +2,10 @@ h1 Listing content
 
 - #TODO: rewrite. Think about shared with native name
 
-- @content_data.each do |content_collection|
+- @content_data.each do |single_type_data|
   - #TODO: last revision - refactor to hash
-  = render partial: "/content/#{content_collection.first[:subject].class.name.tableize}/table", locals: {content_collection: content_collection}
+  = render "/content/#{single_type_data[:type].tableize}/table", content_collection: single_type_data[:collection]
+  = link_to "New #{single_type_data[:type].capitalize}", public_send("new_#{single_type_data[:type]}_path")
 
 - #TODO: rewrite
 br

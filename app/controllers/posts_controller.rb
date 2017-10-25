@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   #TODO: clear focus on post when click on another edit link
   def edit
     @post = Post.find(params[:id])
-    forbid_changes_for_strangers!(@post)
+    forbid_changes_for_strangers!(@post); return if performed?
     @post_data = PostDecorator.new.edit_post_data(@post)
     render :edit_post
   end
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    forbid_changes_for_strangers!(@post)
+    forbid_changes_for_strangers!(@post); return if performed?
     @post.content_posts = []
     if @post.update(actual_params)
       @post_data = PostDecorator.new.show_post_data(@post, current_user)
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    forbid_changes_for_strangers!(@post)
+    forbid_changes_for_strangers!(@post); return if performed?
     if @post.destroy
       @post.delete_publisher(current_user)
       render :delete_post

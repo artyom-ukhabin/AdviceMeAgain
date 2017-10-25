@@ -22,8 +22,6 @@ module RandomRecommendation
       @recommendations_types.sample
     end
 
-
-
     #TODO: maybe move - question of responsibility
     #TODO: actually both fetcher and unifier needed for each type to get rid of dependency
     def get_random_method(unifier)

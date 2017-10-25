@@ -1,0 +1,6 @@
+p
+  strong Genres:
+  br
+  - genres_collection.each do |genre|
+    = link_to genre.name, genre
+    br

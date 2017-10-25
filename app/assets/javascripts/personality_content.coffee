@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 #TODO: classes
-window.applySelect2ForContent = (content_input) ->
+window.applySelect2ForPersonalitiesContent = (content_input) ->
   input = $(content_input)
   initializeSelect2(input)
 

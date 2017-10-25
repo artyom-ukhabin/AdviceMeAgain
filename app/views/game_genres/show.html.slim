@@ -1,0 +1,9 @@
+p
+  strong Name:
+  = @genre_data[:genre].name
+
+= render partial: 'game_genres/content_section/wrapper', locals: { content_data: @genre_data[:content_data] }
+
+= link_to 'Edit', edit_game_genre_path(@genre_data[:genre])
+'  |
+= link_to 'Back', game_genres_path

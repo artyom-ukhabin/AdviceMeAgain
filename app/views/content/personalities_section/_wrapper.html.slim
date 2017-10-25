@@ -1,4 +1,4 @@
 #content_personalities_wrapper
   = render 'content/personalities_section/collection', personalities_collection: personalities_data[:related_personalities]
-  #form_section
-    = link_to 'Edit personalities', edit_content_personalities_path(personalities_data[:content_id]), remote: true, id: :a
+  .form_section
+    = link_to 'Edit personalities', edit_content_personalities_path(personalities_data[:content_id]), remote: true

@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1/edit
   def edit
     @profile = Profile.find(params[:id])
-    forbid_changes_for_strangers!(@profile)
+    forbid_changes_for_strangers!(@profile); return if performed?
   end
 
   # POST /profiles
@@ -41,7 +41,7 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1.json
   def update
     @profile = Profile.find(params[:id])
-    forbid_changes_for_strangers!(@profile)
+    forbid_changes_for_strangers!(@profile); return if performed?
     respond_to do |format|
       if @profile.update(profile_params)
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
@@ -57,7 +57,7 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1.json
   def destroy
     @profile = Profile.find(params[:id])
-    forbid_changes_for_strangers!(@profile)
+    forbid_changes_for_strangers!(@profile); return if performed?
     @profile.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Profile was successfully destroyed.' }

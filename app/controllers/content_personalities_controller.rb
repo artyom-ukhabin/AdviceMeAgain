@@ -8,7 +8,8 @@ class ContentPersonalitiesController < ApplicationController
 
   def create
     content = Content.find(params[:content_id])
-    content.personality_ids = params[:personalities_ids]
+    updater = ContentPersonalitiesUpdater.new(content)
+    updater.personality_ids = params[:personalities_ids]
     @personalities_data = ContentPersonalitiesDecorator.new.personalities_data(content)
     render 'content/personalities_section/update_section'
   end
