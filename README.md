@@ -46,14 +46,14 @@
 * MANDATORY: Recommendations doesnt deleting after deleting users in collaborative filtering. Fix.
 * refactor content based updaters - scope for arrays and for single
 
-#Deploy
+# Deploy
 * MANDATORY: add build recommendations rake tasks in init script
 
 # Phase 3
 * css
 * pub-sub system (for recommendations update or chat)
 * roles
-* <move info here later>
+* move info here later
 
 Some of used techniques:
 * Decorator
@@ -72,17 +72,7 @@ Things to learn:
 * model objects, representers
 * nested layouts, place for layouts logic - helpers? Investigate where to place layouts css/js too.
 
-Phase 2 is in progress.
-
-Phase 2:
-1) Collaboration filtering. Recommendations page with ~5 metrics for each rateable
-2) background job + indexes or nosql base or cache or something for collaboration filtering data. Maybe elasticsearch.
-2.5) Redis queue
-3) recommendations section with random metric
-4) ajax with alert/link/section after click rate
-5) Content oriented search in contradiction to collaborating search - user oriented. Base: genres. (and tags?)
-6) rake task for generating a lot of data
-7) n+1 queries
+Phase 2 is over.
 
 Hint: elasticsearch-rails can generate app with bootstrap integration
 Find the way to recreate ES index: (#{Model}.gateway.create_index! force: true and run both top-level rake tasks for now)
