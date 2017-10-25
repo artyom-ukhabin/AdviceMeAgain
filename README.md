@@ -72,7 +72,8 @@ Things to learn:
 * model objects, representers
 * nested layouts, place for layouts logic - helpers? Investigate where to place layouts css/js too.
 
-Phase 2 is over.
+# Current status
+Project is freezed right now. Dont forget to fix recommendations for both collaborative and content based before phase 3.
 
 Hint: elasticsearch-rails can generate app with bootstrap integration
 Find the way to recreate ES index: (#{Model}.gateway.create_index! force: true and run both top-level rake tasks for now)
