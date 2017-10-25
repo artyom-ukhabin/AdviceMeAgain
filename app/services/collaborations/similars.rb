@@ -1,7 +1,7 @@
 module Collaborations
   class Similars
     def initialize(items_type, rater)
-      @similars_datastore_connector = Collaborations::SimilarsDatastoreConnector.new
+      @similars_datastore_connector = Collaborations::DatastoreConnectors::SimilarsConnector.new
       @items_type = items_type
       @rater = rater
     end

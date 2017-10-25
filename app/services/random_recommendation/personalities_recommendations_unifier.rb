@@ -1,19 +1,27 @@
 module RandomRecommendation
   class PersonalitiesRecommendationsUnifier
     RECOMMENDATIONS_METHODS = %i(collaborations_data highest_rated most_discussed with_highrated_related_content
-      with_liked_related_content)
+      with_liked_related_content content_based_data)
     #TODO: this is abstraction, learn how deal with it
     RECOMMENDATION_TYPES = {
       collaborations: 'collaborations',
+      content_based: 'content_based',
       regular: 'regular',
       content_related: 'content_related'
     }
 
     def initialize
-      @collaborations_decorator =
-        RecommendationsDecorators::Shared::CollaborationsDecorator.new(Personality::TYPE)
+      @collaborations_decorator = RecommendationsDecorators::Shared::CollaborationsDecorator.new(Personality::TYPE)
+      @content_based_decorator = RecommendationsDecorators::Shared::ContentBasedDecorator.new(Personality::TYPE)
       @regular_decorator = RecommendationsDecorators::PersonalitiesDecorators::RegularDecorator.new
       @content_related_decorator = RecommendationsDecorators::PersonalitiesDecorators::ContentRelatedDecorator.new
+    end
+
+    def content_based_data(user)
+      {
+        recommendation_type: RECOMMENDATION_TYPES[:content_based],
+        data: @content_based_decorator.recommendations_data(user)
+      }
     end
 
     def collaborations_data(user)

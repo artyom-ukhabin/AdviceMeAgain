@@ -1,8 +1,9 @@
-#TODO: if several actions - something like in POODR with duck types
-class RateUpdater
-  def initialize(rate, item)
+class ContentRateUpdater
+  CONTENT_BASED_WORKER_CLASS = ContentBasedFiltering::UpdateUserContentPreferencesWorker
+
+  def initialize(rate, content)
     @rate = rate
-    @updaters = fill_updaters(rate, item)
+    @updaters = fill_updaters(rate, content)
   end
 
   def save
@@ -25,9 +26,10 @@ class RateUpdater
 
   private
 
-  def fill_updaters(rate, item)
+  def fill_updaters(rate, content)
     updaters = []
-    updaters << RateUpdater::CollaborationsUpdater.new(rate, item)
+    updaters << RateUpdaters::CollaborationsUpdater.new(rate, content)
+    updaters << RateUpdaters::ContentBasedUpdater.new(rate, content, CONTENT_BASED_WORKER_CLASS)
     updaters
   end
 

@@ -1,4 +1,4 @@
 .top_recommendations_section
   h1 = recommendations_data[:type]
   = render "layouts/shared/recommendations/#{recommendations_data[:result][:recommendation_type]}_section",
-      data: recommendations_data[:result][:data]
+      data: recommendations_data[:result][:data], items_type: recommendations_data[:type]

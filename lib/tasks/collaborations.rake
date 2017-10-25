@@ -1,4 +1,5 @@
 namespace :collaborations do
+  #TODO: add to deploy
   desc "Update collaborations data for all users"
   task update_for_all: :environment do
     puts "Updating all users collaborations data..."

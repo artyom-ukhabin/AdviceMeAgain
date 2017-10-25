@@ -1,7 +1,7 @@
 class ContentReview < Base::Review
   belongs_to :content
   #TODO: provide independency from votable \/
-  has_many :votes, class_name: 'ContentReviewVote', inverse_of: :content_review
+  has_many :votes, class_name: 'ContentReviewVote', inverse_of: :content_review, dependent: :destroy
   has_many :voted_users, through: :votes, source: :user
   has_many :upvoted_users, -> {where("content_review_votes.vote=?", UPVOTE_CONSTANT)}, through: :votes, source: :user
   has_many :downvoted_users, -> {where("content_review_votes.vote=?", DOWNVOTE_CONSTANT)}, through: :votes, source: :user

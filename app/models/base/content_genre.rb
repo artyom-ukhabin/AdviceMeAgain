@@ -17,5 +17,10 @@ module Base
         raise NotImplementedError
       end
     end
+
+    #TODO: do something with this
+    def content_type
+      self.class.name.split(/Genre/, 2).first
+    end
   end
 end

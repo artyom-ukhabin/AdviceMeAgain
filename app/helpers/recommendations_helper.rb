@@ -8,6 +8,14 @@ module RecommendationsHelper
     end
   end
 
+  def render_content_based_items(content_based_data)
+    if content_based_data.blank?
+      'No recommendations for now. Rate some other items and come back.'
+    else
+      render 'recommendations/content_based_items', content_based_data: content_based_data
+    end
+  end
+
   def render_regular_recommendations(recommendation_items)
     if recommendation_items.blank?
       'No data yet.'

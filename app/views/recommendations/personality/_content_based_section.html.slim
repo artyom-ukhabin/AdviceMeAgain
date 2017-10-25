@@ -1,0 +1,7 @@
+p
+  strong You might also like(genre based):
+  - content_based_data.each do |single_type_recommendation|
+    .single_type_recommendation
+      span.content_section_type = "#{single_type_recommendation[:type]}:"
+      '
+      = render_content_based_items(single_type_recommendation[:items])

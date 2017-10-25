@@ -21,7 +21,8 @@ class GameGenresController < ApplicationController
 
   def create
     @game_genre = GameGenre.new(game_genre_params)
-    if @game_genre.save
+    updater = GenreUpdater.new(@game_genre)
+    if updater.save
       redirect_to @game_genre, notice: 'Game genre was successfully created.'
     else
       render :new
@@ -30,7 +31,8 @@ class GameGenresController < ApplicationController
 
   def update
     @game_genre = GameGenre.find(params[:id])
-    if @game_genre.update(game_genre_params)
+    updater = GenreUpdater.new(@game_genre)
+    if updater.update(game_genre_params)
       redirect_to @game_genre, notice: 'Game genre was successfully updated.'
     else
       render :edit
@@ -39,7 +41,8 @@ class GameGenresController < ApplicationController
 
   def destroy
     @game_genre = GameGenre.find(params[:id])
-    @game_genre.destroy
+    updater = GenreUpdater.new(@game_genre)
+    updater.destroy
     redirect_to game_genres_url, notice: 'Game genre was successfully destroyed.'
   end
 

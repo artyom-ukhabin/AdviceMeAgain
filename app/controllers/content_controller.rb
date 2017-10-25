@@ -28,11 +28,10 @@ class ContentController < ApplicationController
   end
 
   def create
-    #TODO: handle with this shit
     current_type = check_type(params[:type])
-    content_class = current_type.classify.constantize
-    @content = content_class.new(content_params)
-    if @content.save
+    @content = content_class(current_type).new(content_params)
+    updater = ContentUpdater.new(@content)
+    if updater.save
       redirect_to @content, notice: "#{@content.type} was successfully created."
     else
       render :new
@@ -51,13 +50,18 @@ class ContentController < ApplicationController
   def destroy
     @content = Content.find(params[:id])
     type = @content.type
-    @content.destroy
+    updater = ContentUpdater.new(@content)
+    updater.destroy
     #TODO: rewrite with url helper method
     #TODO: think when and where redirect after destroy
     redirect_to "/#{type.tableize}", notice: "#{type} was successfully destroyed."
   end
 
   private
+
+  def content_class(current_type)
+    current_type.classify.constantize
+  end
 
   def content_params
     #TODO: think about it

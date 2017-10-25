@@ -21,7 +21,8 @@ class BandGenresController < ApplicationController
 
   def create
     @band_genre = BandGenre.new(band_genre_params)
-    if @band_genre.save
+    updater = GenreUpdater.new(@band_genre)
+    if updater.save
       redirect_to @band_genre, notice: 'Band genre was successfully created.'
     else
       render :new
@@ -30,7 +31,8 @@ class BandGenresController < ApplicationController
 
   def update
     @band_genre = BandGenre.find(params[:id])
-    if @band_genre.update(band_genre_params)
+    updater = GenreUpdater.new(@band_genre)
+    if updater.update(band_genre_params)
       redirect_to @band_genre, notice: 'Band genre was successfully updated.'
     else
       render :edit
@@ -39,7 +41,8 @@ class BandGenresController < ApplicationController
 
   def destroy
     @band_genre = BandGenre.find(params[:id])
-    @band_genre.destroy
+    updater = GenreUpdater.new(@band_genre)
+    updater.destroy
     redirect_to band_genres_url, notice: 'Band genre was successfully destroyed.'
   end
 

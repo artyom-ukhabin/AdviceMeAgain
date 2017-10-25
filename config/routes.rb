@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'welcome', to: "welcome#index", as: :welcome
 
   ActiveAdmin.routes(self)
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   resources :profiles, except: [:index]
 

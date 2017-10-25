@@ -1,4 +1,4 @@
-class RateUpdater
+module RateUpdaters
   class CollaborationsUpdater
     def initialize(rate, item)
       @rater = rate.user

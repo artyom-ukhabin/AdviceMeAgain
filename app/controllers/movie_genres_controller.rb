@@ -21,7 +21,8 @@ class MovieGenresController < ApplicationController
 
   def create
     @movie_genre = MovieGenre.new(movie_genre_params)
-    if @movie_genre.save
+    updater = GenreUpdater.new(@movie_genre)
+    if updater.save
       redirect_to @movie_genre, notice: 'Movie genre was successfully created.'
     else
       render :new
@@ -30,7 +31,8 @@ class MovieGenresController < ApplicationController
 
   def update
     @movie_genre = MovieGenre.find(params[:id])
-    if @movie_genre.update(movie_genre_params)
+    updater = GenreUpdater.new(@movie_genre)
+    if updater.update(movie_genre_params)
       redirect_to @movie_genre, notice: 'Movie genre was successfully updated.'
     else
       render :edit
@@ -39,7 +41,8 @@ class MovieGenresController < ApplicationController
 
   def destroy
     @movie_genre = MovieGenre.find(params[:id])
-    @movie_genre.destroy
+    updater = GenreUpdater.new(@movie_genre)
+    updater.destroy
     redirect_to movie_genres_url, notice: 'Movie genre was successfully destroyed.'
   end
 

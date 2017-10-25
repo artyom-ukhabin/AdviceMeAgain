@@ -7,7 +7,8 @@ class ContentGenresController < ApplicationController
 
   def create
     content = Content.find(params[:content_id])
-    content.genre_ids = params[:genres_ids]
+    updater = ContentGenresUpdater.new(content)
+    updater.genre_ids = params[:genres_ids]
     @genres_data = ContentGenresDecorator.new.genres_data(content)
     render 'content/genres_section/update_section'
   end

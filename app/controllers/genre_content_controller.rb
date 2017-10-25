@@ -9,7 +9,8 @@ class GenreContentController < ApplicationController
   def create
     genre_type = params[:type]
     genre = concrete_genre(genre_type).find(params[:genre_id])
-    genre.content_ids = params[:content_ids]
+    updater = GenreContentUpdater.new(genre)
+    updater.content_ids = params[:content_ids]
     @content_data = GenreContentDecorator.new.content_data(genre)
     render "#{genre_type}_genres/content_section/update_section"
   end

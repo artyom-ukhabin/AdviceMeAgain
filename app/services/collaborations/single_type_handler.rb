@@ -45,7 +45,7 @@ module Collaborations
     def build_collaboration_hash(recommended_items, prediction_object)
       collaboration_hash = {}
       collaboration_hash[:item] = recommended_items.detect{ |item| item.id == prediction_object.item_id}
-      collaboration_hash[:prediction] = prediction_object.prediction_value * 100
+      collaboration_hash[:prediction] = (prediction_object.prediction_value * 100).round(2)
       collaboration_hash
     end
 

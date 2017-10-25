@@ -2,7 +2,7 @@ module Collaborations
   class Recommendations
     def initialize(items_type, rater, similars)
       @items_type = items_type
-      @recommendations_datastore_connector = Collaborations::RecommendationsDatastoreConnector.new
+      @recommendations_datastore_connector = Collaborations::DatastoreConnectors::RecommendationsConnector.new
       @rater = rater
       @similars = similars
     end
@@ -13,12 +13,17 @@ module Collaborations
     end
 
     def update(user)
+      clean_recommendations(user)
       similarities = @similars.similars_for(user)
       unrated_items_from_similar = unrated_items_from_similar(user, similarities)
       update_predictions(user, similarities, unrated_items_from_similar)
     end
 
     private
+
+    def clean_recommendations(user)
+      @recommendations_datastore_connector.destroy(user)
+    end
 
     def fetch_positive_recommendations(recommendations)
       recommendations.select do |recommendation|

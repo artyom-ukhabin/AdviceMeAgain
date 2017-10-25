@@ -21,7 +21,8 @@ class BookGenresController < ApplicationController
 
   def create
     @book_genre = BookGenre.new(book_genre_params)
-    if @book_genre.save
+    updater = GenreUpdater.new(@book_genre)
+    if updater.save
       redirect_to @book_genre, notice: 'Book genre was successfully created.'
     else
       render :new
@@ -30,7 +31,8 @@ class BookGenresController < ApplicationController
 
   def update
     @book_genre = BookGenre.find(params[:id])
-    if @book_genre.update(book_genre_params)
+    updater = GenreUpdater.new(@book_genre)
+    if updater.update(book_genre_params)
       redirect_to @book_genre, notice: 'Book genre was successfully updated.'
     else
       render :edit
@@ -39,7 +41,8 @@ class BookGenresController < ApplicationController
 
   def destroy
     @book_genre = BookGenre.find(params[:id])
-    @book_genre.destroy
+    updater = GenreUpdater.new(@book_genre)
+    updater.destroy
     redirect_to book_genres_url, notice: 'Book genre was successfully destroyed.'
   end
 
