@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: AdviceMeAgain_production
-  username: AdviceMeAgain
+  username: <%= ENV['ADVICEMEAGAIN_DATABASE_USER'] %>
   password: <%= ENV['ADVICEMEAGAIN_DATABASE_PASSWORD'] %>
