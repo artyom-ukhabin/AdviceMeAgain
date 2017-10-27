@@ -48,6 +48,7 @@
 
 # Deploy
 * MANDATORY: add build recommendations rake tasks in init script
+* some issues, described in the different place
 
 # Phase 3
 * css

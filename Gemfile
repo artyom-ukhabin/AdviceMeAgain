@@ -54,6 +54,14 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'forgery', '~> 0.6'
+
+  gem 'capistrano', '~> 3.10.0',        require: false
+  gem 'capistrano-rvm', '~> 0.1.2',     require: false
+  gem 'capistrano-rails', '~> 1.3.0',   require: false
+  gem 'capistrano-bundler', '~> 1.3.0', require: false
+  gem 'capistrano3-puma', '~> 3.1.1',   require: false
+  # gem 'capistrano3-nginx', '~> 2.1.6',  require: false
+  # gem 'capistrano-upload-config'
 end
 
 group :development do
