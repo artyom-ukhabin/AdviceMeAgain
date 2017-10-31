@@ -1,21 +1,23 @@
 nav.navbar.navbar-default.navbar-static-top.navbar-inverse
-  .container-fluid
-    - if signed_in?
-      .navbar-brand
-        | Welcome,
-        = current_user.email
-    ul.nav.navbar-nav.navbar-right
+  span
+    .left_floated = image_tag('logo.png')
+    .container-fluid
       - if signed_in?
-        li
-          = link_to current_user.email, edit_user_registration_path
-        li
-          = link_to "Home", welcome_path
-        li
-          = link_to "Admin", admin_root_path
-        li
-          = link_to "Sign out", destroy_user_session_path
-      - else
-        li
-          = link_to "Sign in", new_user_session_path
-        li
-          = link_to "Sign up", new_user_registration_path
+        .navbar-brand.left_floated
+          | Welcome,
+          = current_user.email
+      ul.nav.navbar-nav.navbar-right
+        - if signed_in?
+          li
+            = link_to current_user.email, edit_user_registration_path
+          li
+            = link_to "Home", welcome_path
+          li
+            = link_to "Admin", admin_root_path
+          li
+            = link_to "Sign out", destroy_user_session_path
+        - else
+          li
+            = link_to "Sign in", new_user_session_path
+          li
+            = link_to "Sign up", new_user_registration_path
