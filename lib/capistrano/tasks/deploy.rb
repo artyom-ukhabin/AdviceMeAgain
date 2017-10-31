@@ -4,6 +4,7 @@ namespace :deploy do
   after 'puma:smart_restart', 'nginx:restart'
 
   before :starting,     :check_revision
+  after  :finishing,    :clobber_assets
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart

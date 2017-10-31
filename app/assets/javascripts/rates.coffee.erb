@@ -20,6 +20,12 @@ $(document).on 'turbolinks:before-cache',  ->
 
 window.ratify = (element) ->
   $(element).raty({
+    #TODO: try to remove this cludge
+    starOn: '<%= image_path('star-on.png') %>',
+    starOff: '<%= image_path('star-off.png') %>',
+    cancelOn: '<%= image_path('cancel-on.png') %>',
+    cancelOff: '<%= image_path('cancel-off.png') %>',
+    path: '',
     score: $(element).data('score')
     cancel: $(element).data('cancel')
     cancelPlace: 'right'
