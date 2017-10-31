@@ -16,12 +16,13 @@ append :linked_files, "config/puma.rb"
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
+append :linked_dirs, "log", "tmp/pids", "tmp/sockets"
 #TODO: 'vendor/bundle' and 'public/uploads wasn't in the defaults'
 #TODO: why this is needed at all?
 
 # Puma:
+#TODO: check this
 set :puma_conf, "#{shared_path}/config/puma.rb"
-
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

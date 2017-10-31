@@ -60,8 +60,8 @@ group :development, :test do
   gem 'capistrano-rails', '~> 1.3.0',   require: false
   gem 'capistrano-bundler', '~> 1.3.0', require: false
   gem 'capistrano3-puma', '~> 3.1.1',   require: false
-  # gem 'capistrano3-nginx', '~> 2.1.6',  require: false
-  # gem 'capistrano-upload-config'
+  #Uncomment if some capistrano recipes need sudo support
+  # gem 'sshkit-sudo'
 end
 
 group :development do
