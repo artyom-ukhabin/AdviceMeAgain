@@ -48,6 +48,7 @@
 
 # Deploy
 * MANDATORY: add build recommendations rake tasks in init script
+* MANDATORY: assets are not clearing between deploys
 * some issues, described in the different place
 
 # Phase 3
