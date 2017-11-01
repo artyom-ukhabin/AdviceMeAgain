@@ -17,7 +17,6 @@ require 'capistrano/bundler'
 require 'capistrano/rvm'
 require 'capistrano/puma'
 install_plugin Capistrano::Puma
-install_plugin Capistrano::Puma::Jungle
 # install_plugin Capistrano::Puma::Nginx
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
