@@ -51,7 +51,7 @@
 * MANDATORY: assets are not clearing between deploys
 * provide full support for puma and systemd, get rid of puma-capistrano pumactl restart command
 * learn about puma/bundle binaries to run command in systemd daemon more properly
-* check if puma restarting properly by pumactl without daemonization
+* check WHY puma restarting properly by pumactl without daemonization
 * some issues, described in the different place
 
 # Phase 3
