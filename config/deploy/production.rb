@@ -8,6 +8,11 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 server '46.101.170.214', user: 'deploy', roles: %w{app db web}
 
+after 'deploy:starting', 'sidekiq:quiet'
+after 'deploy:reverted', 'sidekiq:restart'
+after 'deploy:published', 'sidekiq:restart'
+
+after  'deploy:starting', :clobber_assets
 
 # role-based syntax
 # ==================
