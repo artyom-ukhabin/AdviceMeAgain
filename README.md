@@ -48,7 +48,7 @@
 
 # Deploy
 * MANDATORY: add build recommendations rake tasks in init script
-* MANDATORY: assets are not clearing between deploys
+* MANDATORY: assets updating correctly, but investigate the way how
 * provide full support for puma and systemd, get rid of puma-capistrano pumactl restart command
 * learn about ALL gems (puma/sidekiq for now) bundle binaries to run command in systemd daemon more properly
 * redis to systemd and sidekiq after redis

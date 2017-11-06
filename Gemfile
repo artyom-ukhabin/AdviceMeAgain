@@ -58,7 +58,6 @@ group :development, :test do
   gem 'capistrano', '~> 3.10.0',        require: false
   gem 'capistrano-rvm', '~> 0.1.2',     require: false
   gem 'capistrano-rails', '~> 1.3.0',   require: false
-  gem 'capistrano-bundler', '~> 1.3.0', require: false
   gem 'capistrano3-puma', '~> 3.1.1',   require: false
   #Uncomment if some capistrano recipes need sudo support
   # gem 'sshkit-sudo'
